@@ -4,22 +4,48 @@
   "name": "Tab Manager",
   "description": "Testing.",
   "version": "1.0",
+  "permissions": ["tabs", "notifications"],
 
-  "permissions": ["tabs"],
+  "web_accessible_resources": [
+    "icon.png"
+  ],
+
   "browser_action": {
     "default_icon": "icon.png",
     "default_popup": "popup.html"
   },
 
   "background": {
-    "scripts": ["background.js"]
+    "scripts": ["extension.js"],
+    "persistent": false
   },
 
   "commands": {
+    "right-tab": {
+      "suggested_key": {
+        "default": "Ctrl+K",
+        "mac": "MacCtrl+K"
+      },
+      "description": "Switches to right tab."
+    },
+    "left-tab": {
+      "suggested_key": {
+        "default": "Ctrl+J",
+        "mac": "MacCtrl+J"
+      },
+      "description": "Switches to left tab."
+    },
+    "add-to-search": {
+      "suggested_key": {
+        "default": "Ctrl+A",
+        "mac": "MacCtrl+A"
+      },
+      "description": "Add this webpage to current search. If there's, highlighted information, adds that to summary (summary page eventually)"
+    },
     "_execute_browser_action": {
       "suggested_key": {
-        "default": "Ctrl+Shift+A",
-        "mac": "Command+Shift+A"
+        "default": "Ctrl+N",
+        "mac": "MacCtrl+N"
       }
     }
   }
