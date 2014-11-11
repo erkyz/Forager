@@ -65,14 +65,31 @@ function prevTab() {
   });
 }
 
-//I give up on the notifications.
-
 function addToSearch() {
-	var options = {
-		type: 'basic',
-		iconURL: 'icon.png',
-		title: 'Test',
-		message: 'Hi'
-	}
-	chrome.notifications.create(options, function() {});
+	chrome.tabs.getSelected(null, function(tab) {
+		chrome.windows.create({'url': tab.url, 
+     	'focused': true}, function() {} );
+	});
+
+// The functional stuff going on with runtime is kind of trippy so I won't worry
+// about this now. 
+
+// function addToSearch() {
+// 	chrome.runtime.getBackgroundPage(function(eventPage) {
+//         // Call the getPageInfo function in the event page, passing in 
+//         // our onPageDetailsReceived function as the callback. This injects 
+//         // content.js into the current tab's HTML
+//         eventPage.getPageDetails(print);
+//     });
+// }
+
+// function addToSearch(callback) {
+// 	// Inject the content script into the current page 
+//    chrome.tabs.executeScript({file: 'content.js'}); 
+//    // Performed when a message is received from the content script
+// 	chrome.runtime.onMessage.addListener(null, null, function(message) { 
+//     	callback(message);
+//     	chrome.windows.create({url: 'https://www.google.com/' + message,
+//    	'focused': true}, function() {} );
+//     }); 
 }

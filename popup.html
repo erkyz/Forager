@@ -13,26 +13,22 @@
     <title>Tab Manager</title>
     <body>
       <p>Begin a new search. </p>
-      <form id="newSearch">
-        <p>Topic:</p>
-        <p><input type="text" id="query"></p>
-        <p><input type="submit" value="Submit" id="submit"></p>
-      </form>
-
+      <p>Topic:</p>
+      <div class="row">
+        <div class="col-sm-6">
+        <form id="newSearch" method="POST" action="#">
+          <div class="input-group">
+            <input type="text" class="form-control" id="query">
+            <span class="input-group-btn">
+              <button id="newSearch" class="btn btn-default" type="submit" >Go!</button>
+            </span>
+          </div><!-- /input-group -->
+        </form>
+        </div><!-- /.col-lg-6 -->
+      </div>
       <br>
       Current searches:
-      <p>
-      <div class="list-group" id="list">
-        <a href="#" class="list-group-item active"> <!-- this is your active search -->
-          A
-        </a>
-        <a href="popup2.html" class="list-group-item">B</a>
-        <a href="#" class="list-group-item">C</a>
-        <a href="#" class="list-group-item">D</a>
-        <a href="#" class="list-group-item">E</a>
-      </div>
-      </p>
-
+      <p><div class="list-group" id="tab-items"></div></p>
     </body>
     <style>
       body {
@@ -43,12 +39,16 @@
         padding-right: 10px;
         padding-bottom: 0px;
         padding-left: 10px;
+        background-color: #FFFFFF;
+        min-width: 250px;
+        max-width: 100%;
       }
       .list-group {
         color: green;
       }
     </style>
 
+    <script src="db.js"></script>
     <script src="popup.js"></script>
 
 </html>
