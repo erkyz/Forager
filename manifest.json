@@ -4,7 +4,11 @@
   "name": "Tab Manager",
   "description": "Testing.",
   "version": "1.0",
-  "permissions": ["tabs", "notifications"],
+  "permissions": [
+    "<all_urls>",
+    "tabs",
+    "notifications"
+    ],
 
   "web_accessible_resources": [
     "icon.png"
@@ -16,31 +20,36 @@
   },
 
   "background": {
-    "scripts": ["extension.js"],
-    "persistent": false
+    "scripts": ["extension.js", "db.js"]
+  },
+
+  "icons": {
+    "16": "green-icon.png", 
+    "48": "yellow-icon.png",
+    "128": "red-icon.png"
   },
 
   "commands": {
-    "right-tab": {
+    "add-importance-1": {
       "suggested_key": {
-        "default": "Ctrl+K",
-        "mac": "MacCtrl+K"
+        "default": "Ctrl+1",
+        "mac": "Command+1"
       },
-      "description": "Switches to right tab."
+      "description": "1."
     },
-    "left-tab": {
+    "add-importance-2": {
       "suggested_key": {
-        "default": "Ctrl+J",
-        "mac": "MacCtrl+J"
+        "default": "Ctrl+2",
+        "mac": "Command+2"
       },
-      "description": "Switches to left tab."
+      "description": "2."
     },
-    "add-to-search": {
+    "add-importance-3": {
       "suggested_key": {
-        "default": "Ctrl+A",
-        "mac": "MacCtrl+A"
+        "default": "Ctrl+3",
+        "mac": "Command+3"
       },
-      "description": "Add this webpage to current search. If there's, highlighted information, adds that to summary (summary page eventually)"
+      "description": "3."
     },
     "_execute_browser_action": {
       "suggested_key": {

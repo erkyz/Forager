@@ -12,8 +12,7 @@
 
     <title>Tab Manager</title>
     <body>
-      <p>Begin a new search. </p>
-      <p>Topic:</p>
+      <p>Begin a new search task. </p>
       <div class="row">
         <div class="col-sm-6">
         <form id="newSearch" method="POST" action="#">
@@ -26,9 +25,16 @@
         </form>
         </div><!-- /.col-lg-6 -->
       </div>
-      <br>
-      Current searches:
-      <p><div class="list-group" id="tab-items"></div></p>
+      <hr>
+      High priority:
+      <p><div class="list-group" id="high-priority"></div></p>
+      <hr>
+      Medium priority:
+      <p><div class="list-group" id="medium-priority"></div></p>
+      <hr>
+      Low priority:
+      <p><div class="list-group" id="low-priority"></div></p>
+      <hr>
     </body>
     <style>
       body {

@@ -1,4 +1,4 @@
-var tabDB = (function() {
+var titleDB = (function() {
    var tDB = {};
    var datastore = null;
 
@@ -78,7 +78,7 @@ var tabDB = (function() {
 	/**
 	 * Create a new tab item.
 	 */
-	tDB.createTab = function(text, callback) {
+	tDB.createTab = function(text, importance, callback) {
 	  // Get a reference to the db.
 	  var db = datastore;
 
@@ -94,6 +94,7 @@ var tabDB = (function() {
 	  // Create an object for the tab item.
 	  var tab = {
 	    'text': text,
+	    'importance': importance,
 	    'timestamp': timestamp
 	  };
 

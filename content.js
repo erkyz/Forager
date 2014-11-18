@@ -1,4 +1,7 @@
-// Send a message containing the page details back to the event page
-chrome.runtime.sendMessage({
-    'title': document.title
-});
+function getInfo() {
+  var ttl = document.title;
+  var link = document.URL;
+  chrome.extension.sendRequest({'title': ttl, 'url': link, 'importance1': true});
+}
+
+getInfo();
