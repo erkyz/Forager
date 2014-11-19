@@ -53,8 +53,8 @@
     },
     "_execute_browser_action": {
       "suggested_key": {
-        "default": "Ctrl+N",
-        "mac": "MacCtrl+N"
+        "default": "Ctrl+B",
+        "mac": "Command+B"
       }
     }
   }

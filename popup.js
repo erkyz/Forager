@@ -33,7 +33,7 @@ window.addEventListener('load', function(evt) {
 
     //IndexedDB stuff
 
-    titleDB.open(refreshTabs);
+    pageDB.open(refreshTabs);
 
     // // Get references to the form elements.
     // var newTabForm = document.getElementById('newSearch');
@@ -48,7 +48,7 @@ window.addEventListener('load', function(evt) {
     //   // Check to make sure the text is not blank (or just spaces).
     //   if (text.replace(/ /g,'') != '') {
     //     // Create the todo item.
-    //     titleDB.createTab(text, 1, function(tab) {
+    //     pageDB.createTab(text, 1, function(tab) {
     //       refreshTabs();
     //     });
     //   }
@@ -63,7 +63,7 @@ window.addEventListener('load', function(evt) {
 
 // Update the list of todo items.
 function refreshTabs() {  
-  titleDB.fetchTabs(function(tabs) {
+  pageDB.fetchTabs(function(tabs) {
     var tabList1 = document.getElementById('high-priority');
     tabList1.innerHTML = '';
     var tabList2 = document.getElementById('medium-priority');
@@ -86,7 +86,7 @@ function refreshTabs() {
       a.appendChild(checkbox);
 
       var span = document.createElement('span');
-      span.innerHTML = tab.text;
+      span.innerHTML = tab.highlighted;
 
       a.appendChild(span);
 
@@ -98,7 +98,7 @@ function refreshTabs() {
       checkbox.addEventListener('click', function(e) {
         var id = parseInt(e.target.getAttribute('data-id'));
 
-        titleDB.deleteTab(id, refreshTabs);
+        pageDB.deleteTab(id, refreshTabs);
       });
     }
 

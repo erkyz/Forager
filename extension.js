@@ -19,7 +19,7 @@ function add1() {
 				activeId,
       		{file: 'content.js'});
 		}); 
-   // chrome.browserAction.setIcon({path: 'SpeakSel16.png'});
+   chrome.browserAction.setIcon({path: 'green-icon.png'});
 }
 
 function add2() {
@@ -30,7 +30,7 @@ function add2() {
 				activeId,
       		{file: 'content2.js'});
 		}); 
-   // chrome.browserAction.setIcon({path: 'SpeakSel16.png'});
+   chrome.browserAction.setIcon({path: 'yellow-icon.png'});
 }
 
 function add3() {
@@ -41,7 +41,7 @@ function add3() {
 				activeId,
       		{file: 'content3.js'});
 		}); 
-   // chrome.browserAction.setIcon({path: 'SpeakSel16.png'});
+   chrome.browserAction.setIcon({path: 'red-icon.png'});
 }
 
 
@@ -52,10 +52,14 @@ function init() {
          if (request['importance1']) {
             var title = request['title'];
             var url = request['url'];
-		 	 	titleDB.open();
+            var highlighted = request['selected'];
+		 	 	pageDB.open();
 	         // Create the item.
-	         titleDB.createTab(title, 1, function() {});
-	         window.alert("Added! (Priority 1)");
+	         if (highlighted.replace(/ /g,'') != '') {
+	         	pageDB.createTab(title, 1, highlighted, function() {});
+	         	window.alert("Added \"" + highlighted + "\" with high importance");
+	         }
+	         else window.alert("Nothing to add.");
 			}
       });
 
@@ -64,10 +68,14 @@ function init() {
          if (request['importance2']) {
             var title = request['title'];
             var url = request['url'];
-	 		   titleDB.open();
-	         // Create the item.
-	         titleDB.createTab(title, 2, function() {});
-	         window.alert("Added! (Priority 2)");
+            var highlighted = request['selected'];
+	 		   pageDB.open();
+	         // Create the item
+	         if (highlighted.replace(/ /g,'') != '') {
+	         	pageDB.createTab(title, 2, highlighted, function() {});
+	         	window.alert("Added \"" + highlighted + "\" with medium importance");
+	         }
+	         else window.alert("Nothing to add.");
 			}
       });
 
@@ -76,10 +84,14 @@ function init() {
          if (request['importance3']) {
             var title = request['title'];
             var url = request['url'];
-	 		   titleDB.open();
+            var highlighted = request['selected'];
+	 		   pageDB.open();
 	         // Create the item.
-	         titleDB.createTab(title, 3, function() {});
-	         window.alert("Added! (Priority 3)");
+	         if (highlighted.replace(/ /g,'') != '') {
+	         	pageDB.createTab(title, 3, highlighted, function() {});
+	         	window.alert("Added \"" + highlighted + "\" with low importance");
+	         }
+	         else window.alert("Nothing to add.");
 			}
       });
 }
