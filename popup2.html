@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+  <head>
+    <!-- Bootstrap! -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+  </head>
+
+    <title>Tab Manager</title>
+    <body>
+      <p>Begin a new search. </p>
+      <p>Topic:</p>
+      <div class="row">
+        <div class="col-sm-6">
+        <form id="newSearch">
+          <div class="input-group">
+            <input type="text" class="form-control" id="query">
+            <span class="input-group-btn">
+              <button id="newSearch" class="btn btn-default" type="submit" >Go!</button>
+            </span>
+          </div><!-- /input-group -->
+        </form>
+        </div><!-- /.col-lg-6 -->
+      </div>
+      <br>
+      Current searches:
+      <p>
+      <div class="list-group" id="list">
+        <!-- this is your active search -->
+        <a href="#" class="list-group-item">A</a>
+        <a href="popup2.html" name="search2" class="list-group-item active">B</a>
+        <a href="#" class="list-group-item">C</a>
+        <a href="#" class="list-group-item">D</a>
+        <a href="#" class="list-group-item">E</a>
+      </div>
+      </p>
+    </body>
+    <style>
+      body {
+        /*overflow-x: hidden; */
+        line-height: 100%;
+        font-size = 12px;
+        padding-top: 10px;
+        padding-right: 10px;
+        padding-bottom: 0px;
+        padding-left: 10px;
+        background-color: #FFFFFF;
+        min-width: 250px;
+        max-width: 100%;
+      }
+      .list-group {
+        color: green;
+      }
+    </style>
+
+    <script src="popup.js"></script>
+
+</html>

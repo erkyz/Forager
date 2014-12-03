@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+  <head>
+    <!-- Bootstrap! -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+  </head>
+
+    <title>Visualizer</title>
+    <body>
+      <h1>Your Research Visualized</h1>
+      <br/>
+      <h3>New Title:</h3>
+      <form id="newTitle" method="POST" action="newTitle.asp">
+        <div class="input-group">
+          <input type="text" name="title">
+          &nbsp;&nbsp;
+          <button id="newTitle" class="btn btn-default" type="submit" >Save</button>
+        </div><!-- /input-group -->
+      </form>
+      <br/>
+      High priority:
+      <p><div class="list-group" id="high-priority"></div></p>
+      <hr>
+      Medium priority:
+      <p><div class="list-group" id="medium-priority"></div></p>
+      <hr>
+      Low priority:
+      <p><div class="list-group" id="low-priority"></div></p>
+      <hr>
+    </body>
+    <style>
+      body {
+        /*overflow-x: hidden; */
+        line-height: 100%;
+        font-size = 12px;
+        padding-top: 10px;
+        padding-right: 10px;
+        padding-bottom: 0px;
+        padding-left: 10px;
+        background-color: #FFFFFF;
+        min-width: 250px;
+        max-width: 100%;
+      }
+    </style>
+    
+    <script src="db.js"></script>
+    <script src="visual.js"></script>
+
+</html>
