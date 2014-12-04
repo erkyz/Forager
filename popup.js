@@ -8,6 +8,10 @@ window.addEventListener('load', function(evt) {
       'focused': true}, function(window) {} );
     });
 
+    document.getElementById('openPage').addEventListener('click', function() {
+      chrome.tabs.create({'url': 'viewpage.html'}, function(window) {} );
+    });
+
     // //add to list
     // chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
     //   var tabList = document.getElementById('high-priority');

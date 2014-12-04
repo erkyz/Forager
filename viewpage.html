@@ -12,26 +12,13 @@
 
     <title>Tab Manager</title>
     <body>
-      <button id="openPage" type="button" class="btn btn-default btn-block">View your tasks.</button>
-      <br>
-      <p>Begin a new search task. </p>
-      <div class="row">
-        <div class="col-sm-6">
-        <form id="newSearch" method="POST" action="#">
-          <div class="input-group">
-            <input type="text" class="form-control" id="query">
-            <span class="input-group-btn">
-              <button id="newSearch" class="btn btn-default" type="submit" >Go!</button>
-            </span>
-          </div><!-- /input-group -->
-        </form>
-        </div><!-- /.col-lg-6 -->
-      </div>
       <hr>
       High priority:
       <p><div class="list-group" id="high-priority"></div></p>
+      <hr>
       Medium priority:
       <p><div class="list-group" id="medium-priority"></div></p>
+      <hr>
       Low priority:
       <p><div class="list-group" id="low-priority"></div></p>
       <hr>
@@ -53,23 +40,23 @@
         background-color: #77DD77;
       }
       [id^="tabone"]:hover {
-        background-color: black;
+        background-color: white;
       }
       [id^="tabtwo"] {
         background-color: #FDFD96;
       }
       [id^="tabone"]:hover {
-        background-color: #77DD77;
+        background-color: white;
       }
       [id^="tabthree"] {
         background-color: #DEA5A4;
       }
       [id^="tabone"]:hover {
-        background-color: #77DD77;
+        background-color: white;
       }
     </style>
 
     <script src="db.js"></script>
-    <script src="popup.js"></script>
+    <script src="viewpage.js"></script>
 
 </html>

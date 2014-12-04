@@ -60,12 +60,7 @@ function init() {
 	         	window.alert("Added \"" + highlighted + "\" with high importance");
 	         }
 	         else window.alert("Nothing to add.");
-			}
-      });
-
-	chrome.extension.onRequest.addListener(
-      function(request, sender) {
-         if (request['importance2']) {
+			} else if (request['importance2']) {
             var title = request['title'];
             var url = request['url'];
             var highlighted = request['selected'];
@@ -76,12 +71,7 @@ function init() {
 	         	window.alert("Added \"" + highlighted + "\" with medium importance");
 	         }
 	         else window.alert("Nothing to add.");
-			}
-      });
-
-	chrome.extension.onRequest.addListener(
-      function(request, sender) {
-         if (request['importance3']) {
+			} else if (request['importance3']) {
             var title = request['title'];
             var url = request['url'];
             var highlighted = request['selected'];
