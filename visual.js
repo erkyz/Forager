@@ -1,20 +1,13 @@
 // When the popup HTML has loaded
 window.addEventListener('load', function(evt) {
     // Handle the bookmark form submit event
-    document.getElementById('newSearch').addEventListener('submit', function() {
+    /*document.getElementById('newSearch').addEventListener('submit', function() {
       var text = document.getElementById('query').value;
       //open new Google window
       chrome.windows.create({'url': 'https://www.google.com/search?q=' + text, 
       'focused': true}, function(window) {} );
-    });
+    });*/
 
-<<<<<<< HEAD
-    document.getElementById('openPage').addEventListener('click', function() {
-      chrome.tabs.create({'url': 'viewpage.html'}, function(window) {} );
-    });
-
-=======
->>>>>>> 57a1c3d75e7ed1d0b15a1a75587706bd2a498a06
     // //add to list
     // chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse) {
     //   var tabList = document.getElementById('high-priority');
@@ -40,7 +33,7 @@ window.addEventListener('load', function(evt) {
 
     //IndexedDB stuff
 
-    pageDB.open(refreshTabs);
+    pageDB.open(refreshVisual);
 
     // // Get references to the form elements.
     // var newTabForm = document.getElementById('newSearch');
@@ -69,7 +62,7 @@ window.addEventListener('load', function(evt) {
 });
 
 // Update the list of todo items.
-function refreshTabs() {  
+function refreshVisual() {  
   pageDB.fetchTabs(function(tabs) {
     var tabList1 = document.getElementById('high-priority');
     tabList1.innerHTML = '';
@@ -85,26 +78,6 @@ function refreshTabs() {
       var a = document.createElement('a');
       a.id = 'tab-' + tab.timestamp;
       a.className = "list-group-item";
-<<<<<<< HEAD
-      var checkbox = document.createElement('input');
-      checkbox.type = "checkbox";
-      checkbox.className = "tab-checkbox";
-      checkbox.setAttribute("data-id", tab.timestamp);
-
-      a.appendChild(checkbox);
-
-      var span = document.createElement('span');
-      span.innerHTML = tab.highlighted;
-
-      a.appendChild(span);
-
-      if (tab.importance == 1) tabList1.appendChild(a);
-      else if (tab.importance == 2) tabList2.appendChild(a);
-      else if (tab.importance == 3) tabList3  .appendChild(a);
-
-      // Setup an event listener for the checkbox.
-      checkbox.addEventListener('click', function(e) {
-=======
 
       var info = document.createElement('a');
       info.innerHTML = tab.highlighted;
@@ -129,14 +102,14 @@ function refreshTabs() {
       else if (tab.importance == 2) tabList2.appendChild(a);
       else if (tab.importance == 3) tabList3.appendChild(a);
 
-      // Setup an event listener for the checkbox.
       x.addEventListener('click', function(e) {
->>>>>>> 57a1c3d75e7ed1d0b15a1a75587706bd2a498a06
         var id = parseInt(e.target.getAttribute('data-id'));
-
-        pageDB.deleteTab(id, refreshTabs);
+        pageDB.deleteTab(id, refreshVisual);
       });
+
     }
 
   });
 }
+
+

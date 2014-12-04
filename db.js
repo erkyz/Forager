@@ -78,7 +78,7 @@ var pageDB = (function() {
 	/**
 	 * Create a new tab item.
 	 */
-	tDB.createTab = function(text, importance, highlighted, callback) {
+	tDB.createTab = function(text, importance, highlighted, url, callback) {
 	  // Get a reference to the db.
 	  var db = datastore;
 
@@ -96,6 +96,7 @@ var pageDB = (function() {
 	    'text': text,
 	    'importance': importance,
 	    'highlighted': highlighted,
+	    'url':url,
 	    'timestamp': timestamp
 	  };
 

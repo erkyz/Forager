@@ -56,8 +56,8 @@ function init() {
 		 	 	pageDB.open();
 	         // Create the item.
 	         if (highlighted.replace(/ /g,'') != '') {
-	         	pageDB.createTab(title, 1, highlighted, function() {});
-	         	window.alert("Added \"" + highlighted + "\" with high importance");
+	         	pageDB.createTab(title, 1, highlighted, url, function() {});
+	         	window.alert("Added \"" + highlighted + "\" with high importance.");
 	         }
 	         else window.alert("Nothing to add.");
 			} else if (request['importance2']) {
@@ -67,8 +67,8 @@ function init() {
 	 		   pageDB.open();
 	         // Create the item
 	         if (highlighted.replace(/ /g,'') != '') {
-	         	pageDB.createTab(title, 2, highlighted, function() {});
-	         	window.alert("Added \"" + highlighted + "\" with medium importance");
+	         	pageDB.createTab(title, 2, highlighted, url, function() {});
+	         	window.alert("Added \"" + highlighted + "\" with medium importance.");
 	         }
 	         else window.alert("Nothing to add.");
 			} else if (request['importance3']) {
@@ -78,8 +78,8 @@ function init() {
 	 		   pageDB.open();
 	         // Create the item.
 	         if (highlighted.replace(/ /g,'') != '') {
-	         	pageDB.createTab(title, 3, highlighted, function() {});
-	         	window.alert("Added \"" + highlighted + "\" with low importance");
+	         	pageDB.createTab(title, 3, highlighted, url, function() {});
+	         	window.alert("Added \"" + highlighted + "\" with low importance.");
 	         }
 	         else window.alert("Nothing to add.");
 			}

@@ -19,6 +19,10 @@
     "default_popup": "popup.html"
   },
 
+  "chrome_url_overrides": {
+    "newtab": "visual.html"
+  },
+
   "background": {
     "scripts": ["extension.js", "db.js"]
   },
