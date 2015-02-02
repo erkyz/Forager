@@ -3,7 +3,7 @@ window.addEventListener('load', function(evt) {
     pageDB.open(refreshTabs);
 });
 
-// Refresh page once a second
+// Refresh page on timer
 window.setInterval(function(){
     pageDB.open(refreshTabs);
 }, 2500);

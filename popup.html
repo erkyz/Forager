@@ -12,9 +12,7 @@
 
     <title>Tab Manager</title>
     <body>
-      <button id="openPage" type="button" class="btn btn-default btn-block">View your tasks.</button>
-      <br>
-      <p>Begin a new search task. </p>
+     <p>Enter a new topic:</p>
       <div class="row">
         <div class="col-sm-6">
         <form id="newSearch" method="POST" action="#">
@@ -27,15 +25,8 @@
         </form>
         </div><!-- /.col-lg-6 -->
       </div>
-      <hr>
-      High priority:
-      <p><div class="list-group" id="high-priority"></div></p>
-      Medium priority:
-      <p><div class="list-group" id="medium-priority"></div></p>
-      Low priority:
-      <p><div class="list-group" id="low-priority"></div></p>
-      <hr>
     </body>
+
     <style>
       body {
         /*overflow-x: hidden; */
@@ -43,29 +34,11 @@
         font-size = 12px;
         padding-top: 10px;
         padding-right: 10px;
-        padding-bottom: 0px;
+        padding-bottom: 5%;
         padding-left: 10px;
         background-color: #FFFFFF;
         min-width: 250px;
         max-width: 100%;
-      }
-      [id^="tabone"] {
-        background-color: #77DD77;
-      }
-      [id^="tabone"]:hover {
-        background-color: black;
-      }
-      [id^="tabtwo"] {
-        background-color: #FDFD96;
-      }
-      [id^="tabone"]:hover {
-        background-color: #77DD77;
-      }
-      [id^="tabthree"] {
-        background-color: #DEA5A4;
-      }
-      [id^="tabone"]:hover {
-        background-color: #77DD77;
       }
     </style>
 

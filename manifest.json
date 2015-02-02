@@ -14,7 +14,7 @@
     "icon.png"
   ],
 
-  "browser_action": {
+  "browser_action": { 
     "default_icon": "icon-16.png",
     "default_popup": "popup.html"
   },
@@ -29,36 +29,36 @@
 
   "icons": {
     "16": "green-icon.png", 
-    "48": "yellow-icon.png",
-    "128": "red-icon.png"
+    "48": "green-icon.png",
+    "128": "green-icon.png"
   },
 
   "commands": {
     "add-importance-1": {
       "suggested_key": {
-        "default": "Ctrl+1",
-        "mac": "Command+1"
+        "default": "Ctrl+I",
+        "mac": "Command+I"
       },
       "description": "1."
     },
     "add-importance-2": {
       "suggested_key": {
-        "default": "Ctrl+2",
-        "mac": "Command+2"
+        "default": "Ctrl+K",
+        "mac": "Command+K"
       },
       "description": "2."
     },
     "add-importance-3": {
       "suggested_key": {
-        "default": "Ctrl+3",
-        "mac": "Command+3"
+        "default": "Ctrl+U",
+        "mac": "Command+U"
       },
       "description": "3."
     },
     "_execute_browser_action": {
       "suggested_key": {
-        "default": "Ctrl+B",
-        "mac": "Command+B"
+        "default": "Ctrl+J",
+        "mac": "Command+J"
       }
     }
   }

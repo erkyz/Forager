@@ -1,3 +1,43 @@
+function init() {
+   //add listeners
+
+   var task = "default";
+
+	chrome.extension.onRequest.addListener(
+      function(request, sender) {
+         if (request['importance1']) {
+            var title = request['title'];
+            var url = request['url'];
+            var highlighted = request['selected'];
+		 	 	pageDB.open();
+	         // Create the item.
+	         // if (highlighted.replace(/ /g,'') != '') {
+	         	pageDB.createTab(task, title, 1, highlighted, url, function() {});
+	         	// window.alert("Added \"" + highlighted + "\" with high importance.");
+	         // }
+	         // else window.alert("Nothing to add.");
+			} else if (request['importance2']) {
+            var title = request['title'];
+            var url = request['url'];
+            var highlighted = request['selected'];
+	 		   pageDB.open();
+	         // Create the item
+	         pageDB.createTab(task, title, 2, highlighted, url, function() {});
+			} else if (request['importance3']) {
+            var title = request['title'];
+            var url = request['url'];
+            var highlighted = request['selected'];
+	 		   pageDB.open();
+	         // Create the item.
+	         pageDB.createTab(task, title, 3, highlighted, url, function() {});
+			} else if (request['task']) {
+				task = request['task'];
+			}
+      });
+}
+
+init();
+
 chrome.commands.onCommand.addListener(function(command) {
   // Call 'update' with an empty properties object to get access to the current
   // tab (given to us in the callback function).
@@ -18,8 +58,8 @@ function add1() {
 			chrome.tabs.executeScript(
 				activeId,
       		{file: 'content.js'});
+			chrome.tabs.remove(activeId)
 		}); 
-   chrome.browserAction.setIcon({path: 'green-icon.png'});
 }
 
 function add2() {
@@ -29,8 +69,8 @@ function add2() {
 			chrome.tabs.executeScript(
 				activeId,
       		{file: 'content2.js'});
+			chrome.tabs.remove(activeId)
 		}); 
-   chrome.browserAction.setIcon({path: 'yellow-icon.png'});
 }
 
 function add3() {
@@ -40,50 +80,6 @@ function add3() {
 			chrome.tabs.executeScript(
 				activeId,
       		{file: 'content3.js'});
+			chrome.tabs.remove(activeId)
 		}); 
-   chrome.browserAction.setIcon({path: 'red-icon.png'});
 }
-
-
-function init() {
-   //add listeners
-	chrome.extension.onRequest.addListener(
-      function(request, sender) {
-         if (request['importance1']) {
-            var title = request['title'];
-            var url = request['url'];
-            var highlighted = request['selected'];
-		 	 	pageDB.open();
-	         // Create the item.
-	         if (highlighted.replace(/ /g,'') != '') {
-	         	pageDB.createTab(title, 1, highlighted, url, function() {});
-	         	window.alert("Added \"" + highlighted + "\" with high importance.");
-	         }
-	         else window.alert("Nothing to add.");
-			} else if (request['importance2']) {
-            var title = request['title'];
-            var url = request['url'];
-            var highlighted = request['selected'];
-	 		   pageDB.open();
-	         // Create the item
-	         if (highlighted.replace(/ /g,'') != '') {
-	         	pageDB.createTab(title, 2, highlighted, url, function() {});
-	         	window.alert("Added \"" + highlighted + "\" with medium importance.");
-	         }
-	         else window.alert("Nothing to add.");
-			} else if (request['importance3']) {
-            var title = request['title'];
-            var url = request['url'];
-            var highlighted = request['selected'];
-	 		   pageDB.open();
-	         // Create the item.
-	         if (highlighted.replace(/ /g,'') != '') {
-	         	pageDB.createTab(title, 3, highlighted, url, function() {});
-	         	window.alert("Added \"" + highlighted + "\" with low importance.");
-	         }
-	         else window.alert("Nothing to add.");
-			}
-      });
-}
-
-init();
