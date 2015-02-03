@@ -1,19 +1,21 @@
-// When the popup HTML has loaded
+// When the HTML has loaded
 window.addEventListener('load', function(evt) {
     pageDB.open(refreshVisual);
 });
 
-// Refresh page once a second
-window.setInterval(function(){
-    pageDB.open(refreshVisual);
-}, 2500);
-
-var task = "&#8984J to make a new task!";
+chrome.extension.sendRequest({'newPage': true});
+var task = "default";
 
 chrome.extension.onRequest.addListener(
   function(request, sender) {
-    if (request['task']) {
+    if (request['currentTask']) {
+      task = request['currentTask'];
+      refreshVisual();
+    } else if (request['task']) {
       task = request['task'];
+      refreshVisual();
+    } else {
+      refreshVisual();
     }
   });
 
@@ -40,7 +42,7 @@ function refreshVisual() {
       a.className = "list-group-item";
 
       var info = document.createElement('a');
-      info.innerHTML = tab.title + " || task: " + tab.task;
+      info.innerHTML = tab.title + " | task: " + tab.task;
       info.href = tab.url;
       info.target = "_blank";
 

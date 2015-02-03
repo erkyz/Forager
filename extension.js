@@ -1,8 +1,7 @@
+task = "default";
+
 function init() {
    //add listeners
-
-   var task = "default";
-
 	chrome.extension.onRequest.addListener(
       function(request, sender) {
          if (request['importance1']) {
@@ -31,7 +30,10 @@ function init() {
 	         // Create the item.
 	         pageDB.createTab(task, title, 3, highlighted, url, function() {});
 			} else if (request['task']) {
+				chrome.extension.sendRequest({'task': request['task']});
 				task = request['task'];
+			} else if (request['newPage']) {
+				chrome.extension.sendRequest({'currentTask': task});
 			}
       });
 }
@@ -54,7 +56,7 @@ chrome.commands.onCommand.addListener(function(command) {
 function add1() {
 	chrome.tabs.query({'currentWindow': true, 'active': true}, 
 		function(tabs) {
-			activeId = tabs[0].id;
+			activeId = tabs[0].id;	
 			chrome.tabs.executeScript(
 				activeId,
       		{file: 'content.js'});
