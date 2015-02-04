@@ -15,6 +15,8 @@ window.addEventListener('load', function(evt) {
     newTabForm.onsubmit = function() {
       // Get the todo text.
       var text = newTabInput.value;
-      chrome.extension.sendRequest({"task": text});
+      chrome.runtime.sendMessage({task: text}, function(response) {
+        console.log(response.farewell);
+      });
     };
 });

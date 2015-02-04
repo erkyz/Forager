@@ -50,15 +50,15 @@
     },
     "add-importance-3": {
       "suggested_key": {
-        "default": "Ctrl+U",
-        "mac": "Command+U"
+        "default": "Ctrl+J",
+        "mac": "Command+J"
       },
       "description": "3."
     },
     "_execute_browser_action": {
       "suggested_key": {
-        "default": "Ctrl+J",
-        "mac": "Command+J"
+        "default": "Ctrl+B",
+        "mac": "Command+B"
       }
     }
   }

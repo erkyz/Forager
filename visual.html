@@ -24,9 +24,8 @@
 
     <style>
       body {
-        /*overflow-x: hidden; */
         line-height: 100%;
-        font-size = 12px;
+        font-size = 10%;
         padding-top: 1.5%;
         padding-bottom: 5%;
         background-color: #FFFFFF;
@@ -34,21 +33,24 @@
         max-width: 100%;
         padding-left: 20%;
         padding-right: 20%;
+        background-image: url('background.jpg');
+        background-size: 50%;
+        text-decoration: none;
       }
       [id^="tabone"] {
-        background-color: #77DD77;
+        background-color: #4D7094;
       }
       [id^="tabone"]:hover {
         background-color: white;
       }
       [id^="tabtwo"] {
-        background-color: #FDFD96;
+        background-color: #6685A3;
       }
       [id^="tabone"]:hover {
         background-color: white;
       }
       [id^="tabthree"] {
-        background-color: #DEA5A4;
+        background-color: #8099B2;
       }
       [id^="tabone"]:hover {
         background-color: white;
@@ -58,7 +60,7 @@
       }
       .close {
         color: black;
-        font-size: 18px;
+        font-size: 18px; 
       }
     </style> 
 
@@ -67,17 +69,15 @@
 <body>
     <h2 id="currentTask">Forager</h2>
     <br/>
-    <h4>Potential (For Later):</h4>
+    <h4>Potential (For Later)</h4>
     <p><div class="list-group" id="high-priority"></div></p>
-    <hr>
-    <h4>Archive:</h4>
+    <h4>Archive</h4>
     <p><div class="list-group" id="medium-priority"></div></p>
-    <hr>
-    <h4>Irrelevant:</h4>
+    <h4>Irrelevant</h4>
     <p><div class="list-group" id="low-priority"></div></p>
     <hr>
 
-    &#8984I to save as potential. &#8984K to archive. &#8984U to close. &#8984J to start a new task.
+    &#8984I to save as potential. &#8984J to archive. &#8984K to close. &#8984B to start a new task.
 
 </body>
 </html>

@@ -3,18 +3,25 @@ window.addEventListener('load', function(evt) {
     pageDB.open(refreshVisual);
 });
 
-chrome.extension.sendRequest({'newPage': true});
+
+// chrome.extension.sendRequest({'newPage': true});
 var task = "default";
 
-chrome.extension.onRequest.addListener(
-  function(request, sender) {
-    if (request['currentTask']) {
-      task = request['currentTask'];
+// var port = chrome.runtime.connect({name: "visual"});
+// port.postMessage({newPage: true});
+// port.onMessage.addListener(function(msg) {
+//   if (msg.currentTask != "") {
+//     task = msg.currentTask;
+//     refreshVisual();
+//   }
+// });
+
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    if (request.newTab == true) //from content.js
       refreshVisual();
-    } else if (request['task']) {
-      task = request['task'];
-      refreshVisual();
-    } else {
+    else if (request.task != "") { //from popup.js
+      task = request.task;
       refreshVisual();
     }
   });
@@ -42,7 +49,15 @@ function refreshVisual() {
       a.className = "list-group-item";
 
       var info = document.createElement('a');
-      info.innerHTML = tab.title + " | task: " + tab.task;
+      var title = tab.title;
+      var tabTask = tab.task;
+      if(title.length > 45) {
+          title = title.substring(0,44) + "... ";
+      }
+      if(tabTask.length > 15) {
+          tabTask = tabTask.substring(0,14) + "... ";
+      }
+      info.innerHTML = title + " || task: " + tabTask;
       info.href = tab.url;
       info.target = "_blank";
 

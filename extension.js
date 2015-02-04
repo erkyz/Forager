@@ -1,42 +1,55 @@
 task = "default";
 
 function init() {
-   //add listeners
-	chrome.extension.onRequest.addListener(
-      function(request, sender) {
-         if (request['importance1']) {
-            var title = request['title'];
-            var url = request['url'];
-            var highlighted = request['selected'];
-		 	 	pageDB.open();
-	         // Create the item.
-	         // if (highlighted.replace(/ /g,'') != '') {
-	         	pageDB.createTab(task, title, 1, highlighted, url, function() {});
-	         	// window.alert("Added \"" + highlighted + "\" with high importance.");
-	         // }
-	         // else window.alert("Nothing to add.");
-			} else if (request['importance2']) {
-            var title = request['title'];
-            var url = request['url'];
-            var highlighted = request['selected'];
-	 		   pageDB.open();
-	         // Create the item
-	         pageDB.createTab(task, title, 2, highlighted, url, function() {});
-			} else if (request['importance3']) {
-            var title = request['title'];
-            var url = request['url'];
-            var highlighted = request['selected'];
-	 		   pageDB.open();
-	         // Create the item.
-	         pageDB.createTab(task, title, 3, highlighted, url, function() {});
-			} else if (request['task']) {
-				chrome.extension.sendRequest({'task': request['task']});
-				task = request['task'];
-			} else if (request['newPage']) {
-				chrome.extension.sendRequest({'currentTask': task});
-			}
-      });
+	//testing runtime
+	// chrome.runtime.onConnect.addListener(function(port) {
+	//   console.assert(port.name == "visual");
+	//   port.onMessage.addListener(function(msg) {
+
+	//   if (msg.newPage)
+	//      port.postMessage({currentTask: task});
+	//   });
+	// });
 }
+
+chrome.runtime.onMessage.addListener(
+   function(request, sender, sendResponse) {
+    console.log(sender.tab ?
+                "from a content script:" + sender.tab.url :
+                "from the extension");
+    if (request.importance1 == true) {  //coming from content script
+         var title = request.title;
+         var url = request.url;
+         var highlighted = request.selected;
+	 	 	pageDB.open();
+	 	 	//create item in database
+         pageDB.createTab(task, title, 1, highlighted, url, function() {});
+         // //inform visual that there's a new tab
+         chrome.runtime.sendMessage({newTab: true}, function(response) {
+			  console.log(response.farewell);
+			});
+		} else if (request.importance2 == true) {
+         var title = request.title;
+         var url = request.url;
+         var highlighted = request.selected;
+ 		   pageDB.open();
+         pageDB.createTab(task, title, 2, highlighted, url, function() {});
+         chrome.runtime.sendMessage({newTab: true}, function(response) {
+			  console.log(response.farewell);
+			});
+		} else if (request.importance3 == true) {
+         var title = request.title;
+         var url = request.url;
+         var highlighted = request.selected;
+ 		   pageDB.open();
+         pageDB.createTab(task, title, 3, highlighted, url, function() {});
+         chrome.runtime.sendMessage({newTab: true}, function(response) {
+			  console.log(response.farewell);
+			});
+		} else if (request.task != "") {
+			task = request.task;
+		}
+   });
 
 init();
 
@@ -56,11 +69,11 @@ chrome.commands.onCommand.addListener(function(command) {
 function add1() {
 	chrome.tabs.query({'currentWindow': true, 'active': true}, 
 		function(tabs) {
-			activeId = tabs[0].id;	
+			activeId = tabs[0].id;
 			chrome.tabs.executeScript(
 				activeId,
       		{file: 'content.js'});
-			chrome.tabs.remove(activeId)
+			chrome.tabs.remove(activeId);
 		}); 
 }
 
@@ -71,7 +84,7 @@ function add2() {
 			chrome.tabs.executeScript(
 				activeId,
       		{file: 'content2.js'});
-			chrome.tabs.remove(activeId)
+			chrome.tabs.remove(activeId);
 		}); 
 }
 
@@ -82,6 +95,6 @@ function add3() {
 			chrome.tabs.executeScript(
 				activeId,
       		{file: 'content3.js'});
-			chrome.tabs.remove(activeId)
+			chrome.tabs.remove(activeId);
 		}); 
 }
