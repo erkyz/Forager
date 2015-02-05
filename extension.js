@@ -1,17 +1,5 @@
 task = "default";
 
-function init() {
-	//testing runtime
-	// chrome.runtime.onConnect.addListener(function(port) {
-	//   console.assert(port.name == "visual");
-	//   port.onMessage.addListener(function(msg) {
-
-	//   if (msg.newPage)
-	//      port.postMessage({currentTask: task});
-	//   });
-	// });
-}
-
 chrome.runtime.onMessage.addListener(
    function(request, sender, sendResponse) {
     console.log(sender.tab ?
@@ -46,12 +34,14 @@ chrome.runtime.onMessage.addListener(
          chrome.runtime.sendMessage({newTab: true}, function(response) {
 			  console.log(response.farewell);
 			});
-		} else if (request.task != "") {
-			task = request.task;
+		} else if (request.newTask) {
+			task = request.task; 
+		} else if (request.newVisual) {
+			chrome.runtime.sendMessage({currentTask: true, task: task}, function(response) {
+        		console.log(response.farewell);
+     		});
 		}
    });
-
-init();
 
 chrome.commands.onCommand.addListener(function(command) {
   // Call 'update' with an empty properties object to get access to the current

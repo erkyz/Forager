@@ -43,15 +43,15 @@
     },
     "add-importance-2": {
       "suggested_key": {
-        "default": "Ctrl+K",
-        "mac": "Command+K"
+        "default": "Ctrl+J",
+        "mac": "Command+J"
       },
       "description": "2."
     },
     "add-importance-3": {
       "suggested_key": {
-        "default": "Ctrl+J",
-        "mac": "Command+J"
+        "default": "Ctrl+K",
+        "mac": "Command+K"
       },
       "description": "3."
     },

@@ -1,11 +1,5 @@
 // When the popup HTML has loaded
 window.addEventListener('load', function(evt) {
-    // document.getElementById('newTask').addEventListener('submit', function() {
-    //   var text = document.getElementById('query').value;
-    //   alert();
-    // });
-
-    //IndexedDB stuff
     pageDB.open();
 
     var newTabForm = document.getElementById('newSearch');
@@ -13,10 +7,11 @@ window.addEventListener('load', function(evt) {
 
     // Handle new todo item form submissions.
     newTabForm.onsubmit = function() {
-      // Get the todo text.
+      // Get the task
       var text = newTabInput.value;
-      chrome.runtime.sendMessage({task: text}, function(response) {
+      chrome.runtime.sendMessage({newTask: true, task: text}, function(response) {
         console.log(response.farewell);
       });
+      window.close();
     };
 });

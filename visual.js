@@ -3,24 +3,21 @@ window.addEventListener('load', function(evt) {
     pageDB.open(refreshVisual);
 });
 
+chrome.runtime.sendMessage({newVisual: true}, function(response) {
+      console.log(response.farewell);
+});
 
-// chrome.extension.sendRequest({'newPage': true});
-var task = "default";
-
-// var port = chrome.runtime.connect({name: "visual"});
-// port.postMessage({newPage: true});
-// port.onMessage.addListener(function(msg) {
-//   if (msg.currentTask != "") {
-//     task = msg.currentTask;
-//     refreshVisual();
-//   }
-// });
+task = "default";
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
-    if (request.newTab == true) //from content.js
+    if (request.newTab == true) { //from content.js
       refreshVisual();
-    else if (request.task != "") { //from popup.js
+    } 
+    else if (request.newTask) { //from popup.js
+      task = request.task;
+      refreshVisual();
+    } else if (request.currentTask) {
       task = request.task;
       refreshVisual();
     }
@@ -88,5 +85,3 @@ function refreshVisual() {
 
   });
 }
-
-
