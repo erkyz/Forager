@@ -57,7 +57,7 @@
     },
     "_execute_browser_action": {
       "suggested_key": {
-        "default": "Ctrl+B",
+        "default": "Ctrl+U",
         "mac": "Command+B"
       }
     }
