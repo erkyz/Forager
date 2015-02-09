@@ -13,7 +13,8 @@ chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     if (request.newTab == true) { //from content.js
       refreshVisual();
-    } 
+      alert(); //After I'm on some other page for a while, the first Command-I doesn't alert here
+    }
     else if (request.newTask) { //from popup.js
       task = request.task;
       refreshVisual();

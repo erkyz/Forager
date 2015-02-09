@@ -16,6 +16,7 @@ chrome.runtime.onMessage.addListener(
          chrome.runtime.sendMessage({newTab: true}, function(response) {
 			  console.log(response.farewell);
 			});
+
 		} else if (request.importance2 == true) {
          var title = request.title;
          var url = request.url;
@@ -40,6 +41,8 @@ chrome.runtime.onMessage.addListener(
 			chrome.runtime.sendMessage({currentTask: true, task: task}, function(response) {
         		console.log(response.farewell);
      		});
+		} else if (request.init) {
+			console.log(reponse.begin)
 		}
    });
 
@@ -61,9 +64,9 @@ function add1() {
 		function(tabs) {
 			activeId = tabs[0].id;
 			chrome.tabs.executeScript(
-				activeId,
-      		{file: 'content.js'});
-			chrome.tabs.remove(activeId);
+				activeId, {file: 'content.js', runAt: "document_start"}, function() {
+					chrome.tabs.remove(activeId);
+				});
 		}); 
 }
 
@@ -72,9 +75,9 @@ function add2() {
 		function(tabs) {
 			activeId = tabs[0].id;
 			chrome.tabs.executeScript(
-				activeId,
-      		{file: 'content2.js'});
-			chrome.tabs.remove(activeId);
+				activeId, {file: 'content2.js', runAt: "document_start"}, function() {
+					chrome.tabs.remove(activeId);
+				});
 		}); 
 }
 
@@ -83,8 +86,8 @@ function add3() {
 		function(tabs) {
 			activeId = tabs[0].id;
 			chrome.tabs.executeScript(
-				activeId,
-      		{file: 'content3.js'});
-			chrome.tabs.remove(activeId);
+				activeId, {file: 'content3.js', runAt: "document_start"}, function() {
+					chrome.tabs.remove(activeId);
+				});
 		}); 
 }
