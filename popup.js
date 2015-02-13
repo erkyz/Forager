@@ -1,6 +1,6 @@
-// When the popup HTML has loaded
+// When the HTML has loaded
 window.addEventListener('load', function(evt) {
-    pageDB.open(refreshVisual);
+    taskDB.open(refreshVisual);
 
     var newTabForm = document.getElementById('newSearch');
     var newTabInput = document.getElementById('query');
@@ -12,23 +12,22 @@ window.addEventListener('load', function(evt) {
       chrome.runtime.sendMessage({newTask: true, task: text}, function(response) {
         console.log(response.farewell);
       });
-      pageDB.createTask(text, function() {
-        alert();
+      taskDB.createTask(text, function() {
         window.close();
       });
     };
 });
 
-// Update the list of todo items.
-function refreshVisual() {  
-  pageDB.fetchTasks(function(tasks) {
-    document.getElementById('currentTask').innerHTML = "My current task: " + task;
+task = "default";
 
+// Update the list of todo items.
+function refreshVisual() {
+  taskDB.fetchTasks(function(tasks) {
     var taskList = document.getElementById('tasklist');
     taskList.innerHTML = '';
 
     for(var i = 0; i < tasks.length; i++) {
-      // Read the tab items backwards (most recent first).
+      // Read the tasks backwards (most recent first).
       var tsk = tasks[tasks.length - i - 1];
 
       var a = document.createElement('a');
@@ -62,9 +61,8 @@ function refreshVisual() {
 
       x.addEventListener('click', function(e) {
         var id = parseInt(e.target.getAttribute('data-id'));
-        pageDB.deleteTask(id, refreshVisual);
+        taskDB.deleteTask(id, refreshVisual);
       });
-
     }
 
   });

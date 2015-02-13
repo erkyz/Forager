@@ -5,10 +5,7 @@ function getInfo() {
   if (window.getSelection().toString().replace(/ /g,'') != '')
   		var highlighted = window.getSelection().toString();
 
-  	chrome.runtime.sendMessage({init: true}, function(response) {
-	  console.log(response.farewell);
-	});
-  	chrome.runtime.sendMessage({title: ttl, url: link, selected: highlighted, importance2: true}, function(response) {
+  chrome.runtime.sendMessage({title: ttl, url: link, selected: highlighted, importance2: true}, function(response) {
 	  console.log(response.farewell);
 	});
 }

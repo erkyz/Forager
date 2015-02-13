@@ -36,13 +36,11 @@ chrome.runtime.onMessage.addListener(
 			  console.log(response.farewell);
 			});
 		} else if (request.newTask) {
-			task = request.task; 
+			task = request.task;
 		} else if (request.newVisual) {
 			chrome.runtime.sendMessage({currentTask: true, task: task}, function(response) {
         		console.log(response.farewell);
      		});
-		} else if (request.init) {
-			console.log(reponse.begin)
 		}
    });
 
