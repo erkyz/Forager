@@ -38,28 +38,28 @@
   "commands": {
     "add-importance-1": {
       "suggested_key": {
-        "default": "Ctrl+Shift+I",
+        "default": "Ctrl+Period",
         "mac": "Command+I"
       },
       "description": "1."
     },
     "add-importance-2": {
       "suggested_key": {
-        "default": "Ctrl+Shift+K",
+        "default": "Ctrl+Comma",
         "mac": "Command+K"
       },
       "description": "2."
     },
     "add-importance-3": {
       "suggested_key": {
-        "default": "Ctrl+Shift+J",
+        "default": "Ctrl+I",
         "mac": "Command+J"
       },
       "description": "3."
     },
     "_execute_browser_action": {
       "suggested_key": {
-        "default": "Ctrl+Shift+U",
+        "default": "Ctrl+B",
         "mac": "Command+B"
       }
     }
