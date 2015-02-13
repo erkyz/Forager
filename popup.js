@@ -31,7 +31,6 @@ function refreshVisual() {
       var tsk = tasks[tasks.length - i - 1];
 
       var a = document.createElement('a');
-      a.id = tsk.timestamp;
       a.className = "list-group-item";
 
       var info = document.createElement('a');
@@ -40,8 +39,16 @@ function refreshVisual() {
           title = title.substring(0,14) + "... ";
       }
       info.innerHTML = title;
-      info.href = "";
       info.target = "_blank";
+      a.id = title;
+      info.onclick = function() {
+        chrome.runtime.sendMessage(
+          {newTask: true, task: this.parentElement.getAttribute('id')},
+          function(response) {
+            console.log(response.farewell);
+            window.close();
+        }
+      )};
 
       a.appendChild(info);
 
