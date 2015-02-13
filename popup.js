@@ -18,8 +18,6 @@ window.addEventListener('load', function(evt) {
     };
 });
 
-task = "default";
-
 // Update the list of todo items.
 function refreshVisual() {
   taskDB.fetchTasks(function(tasks) {
@@ -38,17 +36,21 @@ function refreshVisual() {
       if(title.length > 15) {
           title = title.substring(0,14) + "... ";
       }
-      info.innerHTML = title;
+      info.innerHTML = title + tsk.count;
+      info.setAttribute('data-id',tsk.timestamp)
       info.target = "_blank";
-      a.id = title;
-      info.onclick = function() {
-        chrome.runtime.sendMessage(
-          {newTask: true, task: this.parentElement.getAttribute('id')},
-          function(response) {
-            console.log(response.farewell);
-            window.close();
-        }
-      )};
+      info.id = title; //should be unique.
+
+      //add onclick to change current task to the clicked task
+      info.addEventListener('click', function(e) {
+        var id = parseInt(e.target.getAttribute('data-id'));
+        taskDB.incrementCount(id, function() {
+          chrome.runtime.sendMessage(
+            {newTask: true, task: e.target.getAttribute('id')},
+            function() {});
+          window.close();
+        });
+      });
 
       a.appendChild(info);
 

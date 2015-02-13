@@ -73,6 +73,7 @@ var taskDB = (function() {
 	  cursorRequest.onerror = tDB.onerror;
 	};
 
+
 	// Create a new item
 	tDB.createTask = function(task, callback) {
 	  // Get a reference to the db.
@@ -90,6 +91,7 @@ var taskDB = (function() {
 	  // Create an object for the task
 	  var task = {
 	  	 'task': task,
+	  	 'count': 1,
 	    'timestamp': timestamp
 	  };
 
@@ -113,7 +115,6 @@ var taskDB = (function() {
 	  var db = datastore;
 	  var transaction = db.transaction(['task'], 'readwrite');
 	  var objStore = transaction.objectStore('task');
-
 	  var request = objStore.delete(id);
 
 	  request.onsuccess = function(e) {
@@ -124,6 +125,36 @@ var taskDB = (function() {
 	    console.log(e);
 	  }
 	};
+
+
+	/**
+	 * Increment a task's counter if it's used.
+	 */
+	tDB.incrementCount = function(id, callback) {
+		var db = datastore;
+		var transaction = db.transaction(['task'], 'readwrite');
+		var objStore = transaction.objectStore('task');
+		var request = objStore.get(id);
+
+		request.onsuccess = function(e) {
+			//get the old value we want to update
+			var task = request.result;
+
+			//increment.
+			task.count += 1;
+
+			//put this updated object back into the DB!
+			var requestUpdate = objStore.put(task);
+			
+			// Handle a successful datastore put.
+		   requestUpdate.onsuccess = function(e) {
+		    	callback();
+	 		 };
+
+			// Handle errors.
+			requestUpdate.onerror = tDB.onerror;
+		}
+	}
 
   // Export the tDB object.
   return tDB;
