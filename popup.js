@@ -24,9 +24,13 @@ function refreshVisual() {
     var taskList = document.getElementById('tasklist');
     taskList.innerHTML = '';
 
+    // Sort tasks by counts (max to min) using an anonymous function!
+    tasks.sort(function(a,b) {
+      return b.count - a.count;
+    });
+
     for(var i = 0; i < tasks.length; i++) {
-      // Read the tasks backwards (most recent first).
-      var tsk = tasks[tasks.length - i - 1];
+      var tsk = tasks[i];
 
       var a = document.createElement('a');
       a.className = "list-group-item";
@@ -36,7 +40,7 @@ function refreshVisual() {
       if(title.length > 15) {
           title = title.substring(0,14) + "... ";
       }
-      info.innerHTML = title + tsk.count;
+      info.innerHTML = title + " || " + tsk.count;
       info.setAttribute('data-id',tsk.timestamp)
       info.target = "_blank";
       info.id = title; //should be unique.
@@ -44,6 +48,8 @@ function refreshVisual() {
       //add onclick to change current task to the clicked task
       info.addEventListener('click', function(e) {
         var id = parseInt(e.target.getAttribute('data-id'));
+
+        //increment counter for this task
         taskDB.incrementCount(id, function() {
           chrome.runtime.sendMessage(
             {newTask: true, task: e.target.getAttribute('id')},
