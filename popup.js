@@ -37,14 +37,14 @@ function refreshVisual() {
 
       var info = document.createElement('a');
       var title = tsk.task;
+      info.id = title; //should be unique.
       if(title.length > 15) {
           title = title.substring(0,14) + "... ";
       }
       info.innerHTML = title + " || " + tsk.count;
       info.setAttribute('data-id',tsk.timestamp)
       info.target = "_blank";
-      info.id = title; //should be unique.
-
+      
       //add onclick to change current task to the clicked task
       info.addEventListener('click', function(e) {
         var id = parseInt(e.target.getAttribute('data-id'));

@@ -16,7 +16,6 @@ chrome.runtime.onMessage.addListener(
          chrome.runtime.sendMessage({newTab: true}, function(response) {
 			  console.log(response.farewell);
 			});
-
 		} else if (request.importance2 == true) {
          var title = request.title;
          var url = request.url;
