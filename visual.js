@@ -51,10 +51,10 @@ function refreshVisual() {
         if(title.length > 45) {
             title = title.substring(0,44) + "... ";
         }
-        if(tabTask.length > 15) {
-            tabTask = tabTask.substring(0,14) + "... ";
-        }
-        info.innerHTML = title + " || task: " + tabTask;
+        // if(tabTask.length > 15) {
+        //     tabTask = tabTask.substring(0,14) + "... ";
+        // }
+        info.innerHTML = title;
         info.href = tab.url;
         info.target = "_blank";
 
