@@ -38,48 +38,49 @@ function refreshVisual() {
       // Read the tab items backwards (most recent first).
       var tab = tabs[tabs.length - i - 1];
 
-      var a = document.createElement('a');
-      if (tab.importance == 1) a.id = 'tabone-' + tab.timestamp;
-      else if (tab.importance == 2) a.id = 'tabtwo-' + tab.timestamp;
-      else if (tab.importance == 3) a.id = 'tabthree-' + tab.timestamp;
-      a.className = "list-group-item";
+      if (tab.task == task) {
+        var a = document.createElement('a');
+        if (tab.importance == 1) a.id = 'tabone-' + tab.timestamp;
+        else if (tab.importance == 2) a.id = 'tabtwo-' + tab.timestamp;
+        else if (tab.importance == 3) a.id = 'tabthree-' + tab.timestamp;
+        a.className = "list-group-item";
 
-      var info = document.createElement('a');
-      var title = tab.title;
-      var tabTask = tab.task;
-      if(title.length > 45) {
-          title = title.substring(0,44) + "... ";
+        var info = document.createElement('a');
+        var title = tab.title;
+        var tabTask = tab.task;
+        if(title.length > 45) {
+            title = title.substring(0,44) + "... ";
+        }
+        if(tabTask.length > 15) {
+            tabTask = tabTask.substring(0,14) + "... ";
+        }
+        info.innerHTML = title + " || task: " + tabTask;
+        info.href = tab.url;
+        info.target = "_blank";
+
+        a.appendChild(info);
+
+        var space = document.createElement('span')
+        space.innerHTML = '&nbsp;&nbsp;'
+
+        a.appendChild(space);
+
+        var x = document.createElement('button');
+        x.setAttribute("class", 'close');
+        x.innerHTML = 'Delete';
+        x.setAttribute("data-id", tab.timestamp);
+
+        a.appendChild(x);
+
+        if (tab.importance == 1) tabList1.appendChild(a);
+        else if (tab.importance == 2) tabList2.appendChild(a);
+        else if (tab.importance == 3) tabList3.appendChild(a);
+
+        x.addEventListener('click', function(e) {
+          var id = parseInt(e.target.getAttribute('data-id'));
+          pageDB.deleteTab(id, refreshVisual);
+        });
       }
-      if(tabTask.length > 15) {
-          tabTask = tabTask.substring(0,14) + "... ";
-      }
-      info.innerHTML = title + " || task: " + tabTask;
-      info.href = tab.url;
-      info.target = "_blank";
-
-      a.appendChild(info);
-
-      var space = document.createElement('span')
-      space.innerHTML = '&nbsp;&nbsp;'
-
-      a.appendChild(space);
-
-      var x = document.createElement('button');
-      x.setAttribute("class", 'close');
-      x.innerHTML = 'Delete';
-      x.setAttribute("data-id", tab.timestamp);
-
-      a.appendChild(x);
-
-      if (tab.importance == 1) tabList1.appendChild(a);
-      else if (tab.importance == 2) tabList2.appendChild(a);
-      else if (tab.importance == 3) tabList3.appendChild(a);
-
-      x.addEventListener('click', function(e) {
-        var id = parseInt(e.target.getAttribute('data-id'));
-        pageDB.deleteTab(id, refreshVisual);
-      });
-
     }
 
   });
