@@ -48,12 +48,8 @@ function refreshVisual() {
         var info = document.createElement('a');
         var title = tab.title;
         var tabTask = tab.task;
-        if(title.length > 45) {
-            title = title.substring(0,44) + "... ";
-        }
-        // if(tabTask.length > 15) {
-        //     tabTask = tabTask.substring(0,14) + "... ";
-        // }
+        if (title.length == 0) title = "Untitled";
+        else if (title.length > 70) title = title.substring(0,69) + "... ";
         info.innerHTML = title;
         info.href = tab.url;
         info.target = "_blank";
