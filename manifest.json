@@ -16,23 +16,26 @@
   ],
 
   "browser_action": { 
-    "default_icon": "Media/icon-16.png",
-    "default_popup": "popup.html"
+    "default_icon": "assets/img/icon-16.png",
+    "default_popup": "assets/html/popup.html"
   },
 
   "chrome_url_overrides": {
-    "newtab": "visual.html"
+    "newtab": "assets/html/visual.html"
   },
 
   "background": {
-    "scripts": ["extension.js", "db.js", "taskdb.js", "visual.js"],
+    "scripts": ["assets/js/extension.js", 
+                "assets/js/db.js",
+                "assets/js/taskdb.js",
+                "assets/js/visual.js"],
     "persistent": true
   },
 
   "icons": {
-    "16": "Media/green-icon.png", 
-    "48": "Media/green-icon.png",
-    "128": "Media/green-icon.png"
+    "16": "assets/img/green-icon.png", 
+    "48": "assets/img/green-icon.png",
+    "128": "assets/img/green-icon.png"
   },
 
   "commands": {
