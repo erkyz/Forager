@@ -25,9 +25,11 @@
         </form>
         </div><!-- /.col-lg-6 -->
       </div>
-      <br>
-      Tasks
+      </br>
+      Tasks 
       <p><div class="list-group" id="tasklist"></div></p>
+      <div id="hint"> Use &#8984{1-9} to switch to a task. </div>
+
     </body>
 
     <style>
@@ -53,10 +55,15 @@
       hr {
         color: black;
       }
+      #hint {
+        font-size: 10px;
+        text-align: right;
+      }
     </style>
 
     <script src="/assets/js/db.js"></script>
     <script src="/assets/js/taskdb.js"></script>
     <script src="/assets/js/popup.js"></script>
+    <script src="/assets/js/shortcut.js"></script>
 
 </html>

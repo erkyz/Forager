@@ -11,12 +11,12 @@ task = "default";
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
-    if (request.newTab == true) { //from content.js
+    if (request.newTab == true) {   //from content.js
       refreshVisual();
     } else if (request.newTask) {   //from popup.js
       task = request.task;
       refreshVisual();
-    } else if (request.currentTask) { //newVisual from me!
+    } else if (request.currentTask) { //newVisual from me
       task = request.task;
       refreshVisual();
     }

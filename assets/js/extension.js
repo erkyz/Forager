@@ -61,7 +61,7 @@ function add1() {
 		function(tabs) {
 			activeId = tabs[0].id;
 			chrome.tabs.executeScript(
-				activeId, {file: 'content.js', runAt: "document_start"}, function() {
+				activeId, {file: '/assets/js/content.js', runAt: "document_start"}, function() {
 					chrome.tabs.remove(activeId);
 				});
 		}); 
@@ -72,7 +72,7 @@ function add2() {
 		function(tabs) {
 			activeId = tabs[0].id;
 			chrome.tabs.executeScript(
-				activeId, {file: 'content2.js', runAt: "document_start"}, function() {
+				activeId, {file: '/assets/js/content2.js', runAt: "document_start"}, function() {
 					chrome.tabs.remove(activeId);
 				});
 		}); 
@@ -83,7 +83,7 @@ function add3() {
 		function(tabs) {
 			activeId = tabs[0].id;
 			chrome.tabs.executeScript(
-				activeId, {file: 'content3.js', runAt: "document_start"}, function() {
+				activeId, {file: '/assets/js/content3.js', runAt: "document_start"}, function() {
 					chrome.tabs.remove(activeId);
 				});
 		}); 
