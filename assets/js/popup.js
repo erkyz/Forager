@@ -2,9 +2,18 @@
 window.addEventListener('load', function(evt) {
     taskDB.open(refreshVisual);
 
+    // Get the current task from the background page.
     chrome.runtime.sendMessage({newVisual: true}, function(response) {
       console.log(response.farewell);
     });
+
+    chrome.runtime.onMessage.addListener(
+      function(request, sender, sendResponse) {
+        if (request.currentTask) {     //newVisual
+          currentTask = request.task;
+          refreshVisual();
+        }
+      });
 
     currentTask = "default";
     newTabForm = document.getElementById('newSearch');
@@ -21,14 +30,6 @@ window.addEventListener('load', function(evt) {
         window.close();
       });
     };
-
-    chrome.runtime.onMessage.addListener(
-      function(request, sender, sendResponse) {
-        if (request.currentTask) {     //newVisual
-          currentTask = request.task;
-          refreshVisual();
-        }
-      });
 });
 
 
