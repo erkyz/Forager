@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+  <head>
+    <!-- Bootstrap! -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+  </head>
+
+    <title>Tab Manager</title>
+    <body>
+      <hr>
+      High priority:
+      <p><div class="list-group" id="high-priority"></div></p>
+      <hr>
+      Medium priority:
+      <p><div class="list-group" id="medium-priority"></div></p>
+      <hr>
+      Low priority:
+      <p><div class="list-group" id="low-priority"></div></p>
+      <hr>
+    </body>
+    <style>
+      body {
+        /*overflow-x: hidden; */
+        line-height: 100%;
+        font-size = 12px;
+        padding-top: 10px;
+        padding-right: 10px;
+        padding-bottom: 0px;
+        padding-left: 10px;
+        background-color: #FFFFFF;
+        min-width: 250px;
+        max-width: 100%;
+      }
+      [id^="tabone"] {
+        background-color: #77DD77;
+      }
+      [id^="tabone"]:hover {
+        background-color: white;
+      }
+      [id^="tabtwo"] {
+        background-color: #FDFD96;
+      }
+      [id^="tabone"]:hover {
+        background-color: white;
+      }
+      [id^="tabthree"] {
+        background-color: #DEA5A4;
+      }
+      [id^="tabone"]:hover {
+        background-color: white;
+      }
+    </style>
+
+    <script src="db.js"></script>
+    <script src="viewpage.js"></script>
+
+</html>
