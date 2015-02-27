@@ -1,6 +1,10 @@
 // When the HTML has loaded
 window.addEventListener('load', function(evt) {
     pageDB.open(refreshVisual);
+
+    shortcut.add("Meta+Right", function() {
+      window.open("/assets/html/visual2.html","_self");   
+    });
 });
 
 chrome.runtime.sendMessage({newVisual: true}, function(response) {
@@ -44,6 +48,7 @@ function refreshVisual() {
         else if (tab.importance == 2) a.id = 'tabtwo-' + tab.timestamp;
         else if (tab.importance == 3) a.id = 'tabthree-' + tab.timestamp;
         a.className = "list-group-item";
+        a.setAttribute("draggable",true);
 
         var info = document.createElement('a');
         var title = tab.title;
