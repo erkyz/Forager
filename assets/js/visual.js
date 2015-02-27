@@ -48,7 +48,6 @@ function refreshVisual() {
         else if (tab.importance == 2) a.id = 'tabtwo-' + tab.timestamp;
         else if (tab.importance == 3) a.id = 'tabthree-' + tab.timestamp;
         a.className = "list-group-item";
-        a.setAttribute("draggable",true);
 
         var info = document.createElement('a');
         var title = tab.title;
