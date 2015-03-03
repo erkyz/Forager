@@ -2,7 +2,9 @@
 window.addEventListener('load', function(evt) {
     pageDB.open(refreshVisual);
 
-    var myAppModule = angular.module('MyApp', ['ui.tree']);
+    shortcut.add("Left", function() {
+      window.open("/assets/html/visual.html","_self");   
+    });
 });
 
 chrome.runtime.sendMessage({newVisual: true}, function(response) {

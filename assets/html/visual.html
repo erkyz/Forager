@@ -1,86 +1,32 @@
 <!doctype html>
-<html>
+<html ng-csp ng-app="listApp">
 <head>
-    <!-- JQuery 
-    <link rel="stylesheet" href="jquery-ui-1.11.2.custom/jquery-ui.min.css">
-    <script src="jquery-ui-1.11.2.custom/external/jquery/jquery.js"></script>
-    <script src="jquery-ui-1.11.2.custom/jquery-ui.min.js"></script>
-    -->
-
-    <script type="text/javascript" src="/assets/js/jquery.js"></script>
-
-    <!-- Bootstrap! -->
-    <!-- Latest compiled and minified CSS -->
+    <!-- Bootstrap -->
+    <script src="/assets/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
-    <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <!-- JQuery -->
+    <script src="/assets/js/jquery-2.1.3.min.js"></script>
+    <!-- Angular -->
+    <script src="/assets/js/angular.min.js"></script>
+    <link rel="stylesheet" href="/assets/angular-ui-tree-master/dist/angular-ui-tree.min.css">
+    <script type="text/javascript" src="/assets/angular-ui-tree-master/dist/angular-ui-tree.min.js"></script>
 
     <script src="/assets/js/visual.js"></script>
     <script src="/assets/js/db.js"></script>
     <script src="/assets/js/taskdb.js"></script>
     <script src="/assets/js/shortcut.js"></script>
-
+    <script src="/assets/js/list.js"></script>
+    <link rel="stylesheet" href="/assets/css/visual.css">
 
     <title>Forager</title>
-
-    <style>
-      body {
-        padding-top: 1.5%;
-        padding-bottom: 5%;
-        background-color: #FFFFFF;
-        min-width: 250px;
-        max-width: 100%;
-        background-image: url('/assets/img/background.jpg');
-        background-size: 100%;
-        text-decoration: none;
-        font-size: 120%;
-      }
-      [id^="tabone"] {
-        background-color: #7f7fbf;
-      }
-      [id^="tabone"]:hover {
-        background-color: white;
-      }
-      [id^="tabtwo"] {
-        background-color: #9999cc;
-      }
-      [id^="tabone"]:hover {
-        background-color: white;
-      }
-      [id^="tabthree"] {
-        background-color: #b2b2d8;
-      }
-      [id^="tabone"]:hover {
-        background-color: white;
-      }
-      a {
-        color: black;
-      }
-      .close {
-        color: black;
-        font-size: 18px; 
-      }
-      hr {
-        color: black;
-      }
-      #currentTask {
-        padding-left: 17%;
-        padding-right: 17%;;
-      }
-      #instructions {
-        padding-left: 17%;
-        padding-right: 17%;
-        line-height: 125%;
-      }
-    </style> 
-
 </head>
 
-<body>
+
+
+<body ng-controller="MainCtrl">
   <h2 id="currentTask">Forager</h2>
-  <div class="row">
+  <div>
     <!-- Column 1 -->
     <div class="col-md-5 col-xs-5 col-md-offset-2 col-xs-offset-2">
       <h4>Potential (For Later)</h4>
@@ -97,8 +43,6 @@
     </div> 
     <!-- Hardcode gutter -->
     <div class="col-md-2 col-xs-2"><br></div>
-
-
   </div>
 
   <div id="instructions">
@@ -106,6 +50,38 @@
   &#8984I to save as potential. &#8984K to archive. &#8984J to close. &#8984Period to start a new task.<br>
   <a id="export"></a><br>
   <a id="help" href="https://www.evernote.com/l/ASrbR-kwtCxPU4w9T0q8oftsFPqoyZ4Jlyc">Need help? Click here!</a>
-  </div>
+
+  <!-- Testing -->
+  <script type="text/ng-template" id="items_renderer.html">
+      <div ui-tree-handle>
+        <a class="btn btn-success btn-xs" data-nodrag ng-click="toggle(this)"><span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a>
+        {{item.title}}
+        <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span class="glyphicon glyphicon-remove"></span></a>
+        <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;"><span class="glyphicon glyphicon-plus"></span></a>
+      </div>
+      <ol ui-tree-nodes="options" ng-model="item.items" ng-class="{hidden: collapsed}">
+        <li ng-repeat="item in item.items" ui-tree-node ng-include="'items_renderer.html'">
+        </li>
+      </ol>
+    </script>
+  <div ui-tree="tree">
+  <ol ui-tree-nodes="" ng-model="list">
+    <li ng-repeat="item in list" ui-tree-node ng-include="'items_renderer.html'">
+      <div ui-tree-handle>
+        {{item.title}}
+      </div>
+      <ol ui-tree-nodes="" ng-model="item.items">
+        <li ng-repeat="subItem in item.items" ui-tree-node>
+          <div ui-tree-handle>
+            {{subItem.title}}
+          </div>
+        </li>
+      </ol>
+    </li>
+  </ol>
+</div>
+
+</div>
 </body>
+
 </html>

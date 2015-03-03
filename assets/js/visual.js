@@ -5,7 +5,7 @@ window.addEventListener('load', function(evt) {
 
     task = "default";
 
-    shortcut.add("Meta+Right", function() {
+    shortcut.add("Right", function() {
       window.open("/assets/html/visual2.html","_self");   
     });
 
@@ -19,7 +19,7 @@ window.addEventListener('load', function(evt) {
         if (request.currentTask) {     //newVisual
           task = request.task;
           refreshVisual();
-          // refreshTabVisual();
+          refreshTabVisual();
         }
       });
 
@@ -34,16 +34,77 @@ window.addEventListener('load', function(evt) {
         } else if (request.newTask) {   //from popup.js
           task = request.task;
           refreshVisual();
+          refreshTabVisual();
         } else if (request.currentTask) { //newVisual from me
           task = request.task;
           refreshVisual();
+          refreshTabVisual();
         }
       });
 });
 
+listApp = angular.module('listApp', ['ui.tree']);
+listApp.controller('MainCtrl', function ($scope) {
+    $scope.list = [{
+      "id": 1,
+      "title": "1. dragon-breath",
+      "items": []
+    }, {
+      "id": 2,
+      "title": "2. moiré-vision",
+      "items": [{
+        "id": 21,
+        "title": "2.1. tofu-animation",
+        "items": [{
+          "id": 211,
+          "title": "2.1.1. spooky-giraffe",
+          "items": []
+        }, {
+          "id": 212,
+          "title": "2.1.2. bubble-burst",
+          "items": []
+        }],
+      }, {
+        "id": 22,
+        "title": "2.2. barehand-atomsplitting",
+        "items": []
+      }],
+    }, {
+      "id": 3,
+      "title": "3. unicorn-zapper",
+      "items": []
+    }, {
+      "id": 4,
+      "title": "4. romantic-transclusion",
+      "items": []
+    }];
+
+    $scope.selectedItem = {};
+
+    $scope.options = {
+    };
+
+    $scope.remove = function(scope) {
+      scope.remove();
+    };
+
+    $scope.toggle = function(scope) {
+      scope.toggle();
+    };
+
+    $scope.newSubItem = function(scope) {
+      var nodeData = scope.$modelValue;
+      nodeData.items.push({
+        id: nodeData.id * 10 + nodeData.items.length,
+        title: nodeData.title + '.' + (nodeData.items.length + 1),
+        items: []
+      });
+    };
+  });
 
 // Update the list of todo items.
 function refreshVisual() {  
+
   pageDB.fetchTabs(function(tabs) {
     document.getElementById('currentTask').innerHTML = "My current task: " + task;
 
