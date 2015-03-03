@@ -1,30 +1,46 @@
 // When the HTML has loaded
 window.addEventListener('load', function(evt) {
     pageDB.open(refreshVisual);
+    taskDB.open(refreshTabVisual);
+
+    task = "default";
 
     shortcut.add("Meta+Right", function() {
       window.open("/assets/html/visual2.html","_self");   
     });
-});
 
-chrome.runtime.sendMessage({newVisual: true}, function(response) {
+    // Get the current task from the background page.
+    chrome.runtime.sendMessage({newVisual: true}, function(response) {
       console.log(response.farewell);
+    });
+
+    chrome.runtime.onMessage.addListener(
+      function(request, sender, sendResponse) {
+        if (request.currentTask) {     //newVisual
+          task = request.task;
+          refreshVisual();
+          // refreshTabVisual();
+        }
+      });
+
+    chrome.runtime.sendMessage({newVisual: true}, function(response) {
+      console.log(response.farewell);
+    });
+
+    chrome.runtime.onMessage.addListener(
+      function(request, sender, sendResponse) {
+        if (request.newTab == true) {   //from content.js
+          refreshVisual();
+        } else if (request.newTask) {   //from popup.js
+          task = request.task;
+          refreshVisual();
+        } else if (request.currentTask) { //newVisual from me
+          task = request.task;
+          refreshVisual();
+        }
+      });
 });
 
-task = "default";
-
-chrome.runtime.onMessage.addListener(
-  function(request, sender, sendResponse) {
-    if (request.newTab == true) {   //from content.js
-      refreshVisual();
-    } else if (request.newTask) {   //from popup.js
-      task = request.task;
-      refreshVisual();
-    } else if (request.currentTask) { //newVisual from me
-      task = request.task;
-      refreshVisual();
-    }
-  });
 
 // Update the list of todo items.
 function refreshVisual() {  
@@ -37,6 +53,15 @@ function refreshVisual() {
     tabList2.innerHTML = '';
     var tabList3 = document.getElementById('low-priority');
     tabList3.innerHTML = '';
+
+    var allTabs = JSON.stringify(tabs);
+
+    // taken from 
+    // http://stackoverflow.com/questions/20104552/javascript-export-in-json-and-download-it-as-text-file-by-clicking-a-button
+    var save = document.getElementById("export");
+    save.download = "JSONexport.txt";
+    save.href = "data:text/plain;base64," + btoa(unescape(encodeURIComponent(allTabs)));
+    save.innerHTML = "Export your data here.";
 
     for(var i = 0; i < tabs.length; i++) {
       // Read the tab items backwards (most recent first).
@@ -56,9 +81,11 @@ function refreshVisual() {
         else if (title.length > 65) title = title.substring(0,64) + "... ";
         info.innerHTML = title;
         info.href = tab.url;
-        info.target = "_blank";
+        info.target = "_self";
+        info.style = "word-wrap: break-word;"
 
         a.appendChild(info);
+        // a.setAttribute("style","width:85%; word-wrap:break-word;")
 
         var space = document.createElement('span')
         space.innerHTML = '&nbsp;&nbsp;'
@@ -67,7 +94,7 @@ function refreshVisual() {
 
         var x = document.createElement('button');
         x.setAttribute("class", 'close');
-        x.innerHTML = 'Delete';
+        x.innerHTML = 'x';
         x.setAttribute("data-id", tab.timestamp);
 
         a.appendChild(x);
@@ -83,5 +110,85 @@ function refreshVisual() {
       }
     }
 
+  });
+}
+
+function refreshTabVisual() {
+    taskDB.fetchTasks(function(tasks) {
+
+    var taskList = document.getElementById('tasklist');
+    taskList.innerHTML = '';
+
+    // Sort tasks by counts (max to min) using an anonymous function!
+    tasks.sort(function(a,b) {
+      return b.count-a.count;
+    });
+
+    var firstTask = ""; var secondTask = ""; var thirdTask = "";
+    var fourthTask = ""; var fifthTask = ""; var sixthTask = "";
+    var seventhTask = ""; var eighthTask = ""; var ninthTask = "";
+
+    if (tasks.length >= 1) firstTask = tasks[0].task;
+    if (tasks.length >= 2) secondTask = tasks[1].task;
+    if (tasks.length >= 3) thirdTask = tasks[2].task;
+    if (tasks.length >= 4) fourthTask = tasks[3].task;
+    if (tasks.length >= 5) fifthTask = tasks[4].task;
+    if (tasks.length >= 6) sixthTask = tasks[5].task;
+    if (tasks.length >= 7) seventhTask = tasks[6].task;
+    if (tasks.length >= 8) eighthTask = tasks[7].task;
+    if (tasks.length >= 9) ninthTask = tasks[8].task;
+
+    for(var i = 0; i < tasks.length; i++) {
+      var tsk = tasks[i];
+
+      var a = document.createElement('a');
+      a.className = "list-group-item";
+
+      var info = document.createElement('a');
+      var title = tsk.task;
+      info.id = title; //should be unique.
+      if(title.length > 15) {
+          title = title.substring(0,14) + "... ";
+      }
+      info.innerHTML = (i+1).toString() + ". " + title;
+      info.setAttribute('data-id',tsk.timestamp)
+      info.target = "_blank";
+      
+      //add onclick to change current task to the clicked task
+      info.addEventListener('click', function(e) {
+        var id = parseInt(e.target.getAttribute('data-id'));
+
+        //increment counter for this task
+        taskDB.incrementCount(id, function() {
+          chrome.runtime.sendMessage(
+            {newTask: true, task: e.target.getAttribute('id')},
+            function() {});
+          chrome.runtime.sendMessage({newVisual: true}, function(response) {
+            console.log(response.farewell);
+          });
+        });
+      });
+
+      a.appendChild(info);
+
+      var space = document.createElement('span')
+      space.innerHTML = '&nbsp;&nbsp;'
+
+      a.appendChild(space);
+
+      var x = document.createElement('button');
+      x.setAttribute("class", 'close');
+      x.innerHTML = 'x';
+      x.setAttribute("data-id", tsk.timestamp);
+
+      a.appendChild(x);
+
+      taskList.appendChild(a);
+
+      x.addEventListener('click', function(e) {
+        var id = parseInt(e.target.getAttribute('data-id'));
+        taskDB.deleteTask(id, refreshTabVisual);
+      });
+    }
   });
 }

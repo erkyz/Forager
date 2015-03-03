@@ -27,18 +27,15 @@
 
     <style>
       body {
-        line-height: 100%;
-        font-size = 10%;
         padding-top: 1.5%;
         padding-bottom: 5%;
         background-color: #FFFFFF;
         min-width: 250px;
         max-width: 100%;
-        padding-left: 20%;
-        padding-right: 20%;
         background-image: url('/assets/img/background.jpg');
         background-size: 100%;
         text-decoration: none;
+        font-size: 120%;
       }
       [id^="tabone"] {
         background-color: #7f7fbf;
@@ -68,23 +65,47 @@
       hr {
         color: black;
       }
+      #currentTask {
+        padding-left: 17%;
+        padding-right: 17%;;
+      }
+      #instructions {
+        padding-left: 17%;
+        padding-right: 17%;
+        line-height: 125%;
+      }
     </style> 
 
 </head>
 
 <body>
-    <h2 id="currentTask">Forager</h2>
-    <br/>
-    <h4>Potential (For Later)</h4>
-    <p><div class="list-group" id="high-priority"></div></p>
-    <h4>Archive</h4>
-    <p><div class="list-group" id="medium-priority"></div></p>
-    <h4>Irrelevant</h4>
-    <p><div class="list-group" id="low-priority"></div></p>
-    <hr>
+  <h2 id="currentTask">Forager</h2>
+  <div class="row">
+    <!-- Column 1 -->
+    <div class="col-md-5 col-xs-5 col-md-offset-2 col-xs-offset-2">
+      <h4>Potential (For Later)</h4>
+      <p><div class="list-group" id="high-priority"></div></p>
+      <h4>Archive</h4>
+      <p><div class="list-group" id="medium-priority"></div></p>
+      <h4>Irrelevant</h4>
+      <p><div class="list-group" id="low-priority"></div></p>
+    </div>
+    <!-- Column 2 -->
+    <div class="col-md-3 col-xs-3">
+      <h4 id="tasks">Tasks</h4>
+      <p><div class="l1ist-group" id="tasklist"></div></p>
+    </div> 
+    <!-- Hardcode gutter -->
+    <div class="col-md-2 col-xs-2"><br></div>
 
-    &#8984I to save as potential. &#8984K to archive. &#8984J to close. &#8984B to start a new task.
-    <a href="https://www.evernote.com/l/ASrbR-kwtCxPU4w9T0q8oftsFPqoyZ4Jlyc"> Need help?</a>
 
+  </div>
+
+  <div id="instructions">
+  <hr>
+  &#8984I to save as potential. &#8984K to archive. &#8984J to close. &#8984Period to start a new task.<br>
+  <a id="export"></a><br>
+  <a id="help" href="https://www.evernote.com/l/ASrbR-kwtCxPU4w9T0q8oftsFPqoyZ4Jlyc">Need help? Click here!</a>
+  </div>
 </body>
 </html>
