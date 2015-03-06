@@ -1,6 +1,13 @@
 var listApp = angular.module('listApp', ['ui.tree']); 
 
-// Controller methods
+function newView() {
+  // Get the current task from the background page.
+  chrome.runtime.sendMessage({newVisual: true}, function(response) {
+    console.log(response.farewell);
+  });
+}
+newView();
+
 listApp.controller('MainCtrl', ['$scope', 'listApp', function ($scope, listApp) {
   pageDB.open(listApp.refreshVisual);
 
@@ -10,11 +17,6 @@ listApp.controller('MainCtrl', ['$scope', 'listApp', function ($scope, listApp) 
 
   shortcut.add("Right", function() {
     window.open("/assets/html/visual2.html","_self");   
-  });
-
-  // Get the current task from the background page.
-  chrome.runtime.sendMessage({newVisual: true}, function(response) {
-    console.log(response.farewell);
   });
 
   chrome.runtime.onMessage.addListener(
@@ -41,10 +43,12 @@ listApp.controller('MainCtrl', ['$scope', 'listApp', function ($scope, listApp) 
               var title = tab.title;
               if (title.length == 0) title = "Untitled";
               else if (title.length > 65) title = title.substring(0,64) + "... ";
-                      var nu = {};
-            nu.title = title;
-            nu.items = [];
-            $scope.list.push(nu);
+            var obj = {};
+            obj.title = title;
+            obj.task = task;
+            obj.id = tab.timestamp;
+            obj.items = [];
+            $scope.list.push(obj);
             $scope.$apply();
             }
           }
@@ -52,6 +56,8 @@ listApp.controller('MainCtrl', ['$scope', 'listApp', function ($scope, listApp) 
       }
     });
 
+
+  //some of the task stuff is messed up now.
     
   $scope.selectedItem = {};
 
@@ -59,6 +65,10 @@ listApp.controller('MainCtrl', ['$scope', 'listApp', function ($scope, listApp) 
   };
 
   $scope.remove = function(scope) {
+        var nodeData = scope.$modelValue;
+      alert(JSON.stringify(scope.$modelValue));
+
+    pageDB.deleteTab(id, newView);
     scope.remove();
   };
 
@@ -68,13 +78,14 @@ listApp.controller('MainCtrl', ['$scope', 'listApp', function ($scope, listApp) 
 
   $scope.newSubItem = function(scope) {
     var nodeData = scope.$modelValue;
+      alert(JSON.stringify(scope.$modelValue));
+
     nodeData.items.push({
       id: nodeData.id * 10 + nodeData.items.length,
       title: nodeData.title + '.' + (nodeData.items.length + 1),
       items: []
     });
-  }; 
-      
+  };     
 
   // listApp.linkList($scope.list);
 
@@ -101,7 +112,8 @@ listApp.factory('listApp', function() {
       var allTabs = JSON.stringify(tabs);
 
       // taken from 
-      // http://stackoverflow.com/questions/20104552/javascript-export-in-json-and-download-it-as-text-file-by-clicking-a-button
+      // http://stackoverflow.com/questions/20104552/javascript-export-
+      // in-json-and-download-it-as-text-file-by-clicking-a-button
       var save = document.getElementById("export");
       save.download = "JSONexport.txt";
       save.href = "data:text/plain;base64," + btoa(unescape(encodeURIComponent(allTabs)));

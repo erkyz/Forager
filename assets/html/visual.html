@@ -26,29 +26,8 @@
   <div>
     <!-- Column 1 -->
     <div class="col-md-5 col-xs-5 col-md-offset-2 col-xs-offset-2">
-      <h4>Potential (For Later)</h4>
-      <p><div class="list-group" id="high-priority"></div></p>
-      <h4>Archive</h4>
-      <p><div class="list-group" id="medium-priority"></div></p>
-      <h4>Irrelevant</h4>
-      <p><div class="list-group" id="low-priority"></div></p>
-    </div>
-    <!-- Column 2 -->
-    <div class="col-md-3 col-xs-3">
-      <h4 id="tasks">Tasks</h4>
-      <p><div class="l1ist-group" id="tasklist"></div></p>
-    </div> 
-    <!-- Hardcode gutter -->
-    <div class="col-md-2 col-xs-2"><br></div>
-  
-    <!-- Second row -->
-    <div class="col-md-8 col-xs-8 col-md-offset-2 col-xs-offset-2"><br>
-      <hr>
-      &#8984I to save as potential. &#8984K to archive. &#8984J to close. &#8984Period to start a new task.<br>
-      <a id="export"></a><br>
-      <a id="help" href="https://www.evernote.com/l/ASrbR-kwtCxPU4w9T0q8oftsFPqoyZ4Jlyc">Need help? Click here!</a>
 
-    <!-- Testing -->
+    <h4>Potential (For Later)</h4>
     <script type="text/ng-template" id="items_renderer.html">
       <div ui-tree-handle>
         <a class="btn btn-success btn-xs" data-nodrag ng-click="toggle(this)"><span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a>
@@ -61,14 +40,6 @@
         </li>
       </ol>
     </script>
-
-<!-- What I need to convert to UI tree stuff -->
-    <!-- <h4>Potential (For Later)</h4>
-      <p><div class="list-group" id="high-priority"></div></p>
-      <h4>Archive</h4>
-      <p><div class="list-group" id="medium-priority"></div></p>
-      <h4>Irrelevant</h4>
-      <p><div class="list-group" id="low-priority"></div></p> -->
       
       <div ui-tree="tree">
       <ol ui-tree-nodes="" ng-model="list">
@@ -86,6 +57,32 @@
         </li>
       </ol>
     </div>
+
+      
+    </div>
+    <!-- Column 2 -->
+    <div class="col-md-3 col-xs-3">
+      <h4 id="tasks">Tasks</h4>
+      <p><div class="l1ist-group" id="tasklist"></div></p>
+    </div> 
+    <!-- Hardcode gutter -->
+    <div class="col-md-2 col-xs-2"><br></div>
+  
+    <!-- Second row -->
+    <div class="col-md-8 col-xs-8 col-md-offset-2 col-xs-offset-2"><br>
+      <hr>
+      &#8984I to save as potential. &#8984K to archive. &#8984J to close. &#8984Period to start a new task.<br>
+      <a id="export"></a><br>
+      <a id="help" href="https://www.evernote.com/l/ASrbR-kwtCxPU4w9T0q8oftsFPqoyZ4Jlyc">Need help? Click here!</a>
+
+      <br>
+
+      <h4>Potential (For Later)</h4>
+      <p><div class="list-group" id="high-priority"></div></p>
+      <h4>Archive</h4>
+      <p><div class="list-group" id="medium-priority"></div></p>
+      <h4>Irrelevant</h4>
+      <p><div class="list-group" id="low-priority"></div></p>
   </div>
 </body>
 
