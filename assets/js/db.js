@@ -1,4 +1,4 @@
-var pageDB = (function() {
+pageDB = (function() {
    var tDB = {};
    var datastore = null;
 
@@ -10,7 +10,7 @@ var pageDB = (function() {
 	  var version = 1;
 
 	  // Open a connection to the datastore.
-	  var request = indexedDB.open('tabs', version);
+	  var request = window.indexedDB.open('tabs', version);
 
 	  // Handle datastore upgrades.
 	  request.onupgradeneeded = function(e) {

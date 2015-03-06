@@ -1,12 +1,12 @@
 <!doctype html>
 <html ng-csp ng-app="listApp">
 <head>
+    <!-- JQuery -->
+    <script src="/assets/js/jquery-2.1.3.min.js"></script>
     <!-- Bootstrap -->
     <script src="/assets/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
-    <!-- JQuery -->
-    <script src="/assets/js/jquery-2.1.3.min.js"></script>
     <!-- Angular -->
     <script src="/assets/js/angular.min.js"></script>
     <link rel="stylesheet" href="/assets/angular-ui-tree-master/dist/angular-ui-tree.min.css">
@@ -16,15 +16,12 @@
     <script src="/assets/js/db.js"></script>
     <script src="/assets/js/taskdb.js"></script>
     <script src="/assets/js/shortcut.js"></script>
-    <script src="/assets/js/list.js"></script>
     <link rel="stylesheet" href="/assets/css/visual.css">
 
     <title>Forager</title>
 </head>
 
-
-
-<body ng-controller="MainCtrl">
+<body ng-controller="MainCtrl" id="test">
   <h2 id="currentTask">Forager</h2>
   <div>
     <!-- Column 1 -->
@@ -43,16 +40,16 @@
     </div> 
     <!-- Hardcode gutter -->
     <div class="col-md-2 col-xs-2"><br></div>
-  </div>
+  
+    <!-- Second row -->
+    <div class="col-md-8 col-xs-8 col-md-offset-2 col-xs-offset-2"><br>
+      <hr>
+      &#8984I to save as potential. &#8984K to archive. &#8984J to close. &#8984Period to start a new task.<br>
+      <a id="export"></a><br>
+      <a id="help" href="https://www.evernote.com/l/ASrbR-kwtCxPU4w9T0q8oftsFPqoyZ4Jlyc">Need help? Click here!</a>
 
-  <div id="instructions">
-  <hr>
-  &#8984I to save as potential. &#8984K to archive. &#8984J to close. &#8984Period to start a new task.<br>
-  <a id="export"></a><br>
-  <a id="help" href="https://www.evernote.com/l/ASrbR-kwtCxPU4w9T0q8oftsFPqoyZ4Jlyc">Need help? Click here!</a>
-
-  <!-- Testing -->
-  <script type="text/ng-template" id="items_renderer.html">
+    <!-- Testing -->
+    <script type="text/ng-template" id="items_renderer.html">
       <div ui-tree-handle>
         <a class="btn btn-success btn-xs" data-nodrag ng-click="toggle(this)"><span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a>
         {{item.title}}
@@ -64,24 +61,32 @@
         </li>
       </ol>
     </script>
-  <div ui-tree="tree">
-  <ol ui-tree-nodes="" ng-model="list">
-    <li ng-repeat="item in list" ui-tree-node ng-include="'items_renderer.html'">
-      <div ui-tree-handle>
-        {{item.title}}
-      </div>
-      <ol ui-tree-nodes="" ng-model="item.items">
-        <li ng-repeat="subItem in item.items" ui-tree-node>
+
+<!-- What I need to convert to UI tree stuff -->
+    <!-- <h4>Potential (For Later)</h4>
+      <p><div class="list-group" id="high-priority"></div></p>
+      <h4>Archive</h4>
+      <p><div class="list-group" id="medium-priority"></div></p>
+      <h4>Irrelevant</h4>
+      <p><div class="list-group" id="low-priority"></div></p> -->
+      
+      <div ui-tree="tree">
+      <ol ui-tree-nodes="" ng-model="list">
+        <li ng-repeat="item in list" ui-tree-node ng-include="'items_renderer.html'">
           <div ui-tree-handle>
-            {{subItem.title}}
+            {{item.title}}
           </div>
+          <ol ui-tree-nodes="" ng-model="item.items">
+            <li ng-repeat="subItem in item.items" ui-tree-node>
+              <div ui-tree-handle>
+                {{subItem.title}}
+              </div>
+            </li>
+          </ol>
         </li>
       </ol>
-    </li>
-  </ol>
-</div>
-
-</div>
+    </div>
+  </div>
 </body>
 
 </html>
