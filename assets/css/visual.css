@@ -1,7 +1,7 @@
 body {
     padding-top: 1.5%;
     padding-bottom: 5%;
-    background-color: #FFFFFF;
+    background-attachment: fixed;  
     min-width: 250px;
     max-width: 100%;
     background-image: url('/assets/img/background.jpg');
@@ -46,6 +46,9 @@ hr {
     padding-right: 18%;
     line-height: 125%;
 }
+* {
+  border-radius: 0 !important;
+}
 
 /* Angular stuff */
 .btn {
@@ -76,3 +79,4 @@ hr {
     background-color: #687074 !important;
     color: #FFF !important;
 }
+

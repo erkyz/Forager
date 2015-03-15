@@ -12,7 +12,7 @@ listApp.controller('MainCtrl', ['$scope', 'listApp', function ($scope, listApp) 
   pageDB.open(listApp.refreshVisual);
 
   pageDB.open(listApp.refreshVisual);
-  taskDB.open(listApp.refreshTabVisual);
+  taskDB.open(listApp.refreshTaskVisual);
   task = "default";
 
   shortcut.add("Right", function() {
@@ -23,14 +23,6 @@ listApp.controller('MainCtrl', ['$scope', 'listApp', function ($scope, listApp) 
     function(request, sender, sendResponse) {
       if (request.newTab == true) {   //from content.js
         listApp.refreshVisual();
-      } else if (request.newTask) {   //from popup.js
-        task = request.task;
-        listApp.refreshVisual();
-        listApp.refreshTabVisual();
-      } else if (request.currentTask) { //newVisual from me
-        task = request.task;
-        listApp.refreshVisual();
-        listApp.refreshTabVisual();
 
         list = [];
         $scope.list = [];
@@ -48,6 +40,38 @@ listApp.controller('MainCtrl', ['$scope', 'listApp', function ($scope, listApp) 
             obj.task = task;
             obj.id = tab.timestamp;
             obj.items = [];
+            obj.url = tab.url;
+            $scope.list.push(obj);
+            $scope.$apply();
+            }
+          }
+        });
+      } else if (request.newTask) {   //from popup.js
+        task = request.task;
+        listApp.refreshVisual();
+        listApp.refreshTaskVisual();
+      } else if (request.currentTask) { //newVisual from me
+        task = request.task;
+        listApp.refreshVisual();
+        listApp.refreshTaskVisual();
+
+        list = [];
+        $scope.list = [];
+        pageDB.fetchTabs(function(tabs) {
+          for(var i = 0; i < tabs.length; i++) {
+            // Read the tab items backwards (most recent first).
+            var tab = tabs[tabs.length - i - 1];
+
+            if (tab.task == task) {
+              var title = tab.title;
+              if (title.length == 0) title = "Untitled";
+              else if (title.length > 65) title = title.substring(0,64) + "... ";
+            var obj = {};
+            obj.title = title;
+            obj.task = task;
+            obj.id = tab.timestamp;
+            obj.items = [];
+            obj.url = tab.url;
             $scope.list.push(obj);
             $scope.$apply();
             }
@@ -62,6 +86,22 @@ listApp.controller('MainCtrl', ['$scope', 'listApp', function ($scope, listApp) 
   $scope.selectedItem = {};
 
   $scope.options = {
+    dropped: function(event) {
+      var start = event.source.index;
+      var end = event.dest.index;
+      var dest = event.dest.nodesScope.$modelValue;
+      if (Math.abs(start-end) == 1) {
+        pageDB.swapId(dest[end].id,dest[start].id, function() {});
+      } else if (start < end) {
+        for (var i = end; i > start; i--) {
+            pageDB.swapId(dest[i].id,dest[start].id, function() {});
+        }
+      } else {
+        for (var i = end; i < start; i++) {
+            pageDB.swapId(dest[i].id,dest[end].id, function() {});
+        }
+      }
+    }
   };
 
   $scope.remove = function(scope) {
@@ -77,8 +117,7 @@ listApp.controller('MainCtrl', ['$scope', 'listApp', function ($scope, listApp) 
   };
 
   $scope.newSubItem = function(scope) {
-    var nodeData = scope.$modelValue;
-      alert(JSON.stringify(scope.$modelValue));
+    window.open(scope.$modelValue.url, "_self");
 
     nodeData.items.push({
       id: nodeData.id * 10 + nodeData.items.length,
@@ -102,8 +141,8 @@ listApp.factory('listApp', function() {
     pageDB.fetchTabs(function(tabs) {
       document.getElementById('currentTask').innerHTML = "My current task: " + task;
 
-      var tabList1 = document.getElementById('high-priority');
-      tabList1.innerHTML = '';
+      // var tabList1 = document.getElementById('high-priority');
+      // tabList1.innerHTML = '';
       var tabList2 = document.getElementById('medium-priority');
       tabList2.innerHTML = '';
       var tabList3 = document.getElementById('low-priority');
@@ -125,8 +164,8 @@ listApp.factory('listApp', function() {
 
         if (tab.task == task) {
           var a = document.createElement('a');
-          if (tab.importance == 1) a.id = 'tabone-' + tab.timestamp;
-          else if (tab.importance == 2) a.id = 'tabtwo-' + tab.timestamp;
+          // if (tab.importance == 1) a.id = 'tabone-' + tab.timestamp;
+          if (tab.importance == 2) a.id = 'tabtwo-' + tab.timestamp;
           else if (tab.importance == 3) a.id = 'tabthree-' + tab.timestamp;
           a.className = "list-group-item";
 
@@ -155,8 +194,8 @@ listApp.factory('listApp', function() {
 
           a.appendChild(x);
 
-          if (tab.importance == 1) tabList1.appendChild(a);
-          else if (tab.importance == 2) tabList2.appendChild(a);
+          // if (tab.importance == 1) tabList1.appendChild(a);
+          if (tab.importance == 2) tabList2.appendChild(a);
           else if (tab.importance == 3) tabList3.appendChild(a);
 
           x.addEventListener('click', function(e) {
@@ -169,7 +208,7 @@ listApp.factory('listApp', function() {
     });
   },
 
-  refreshTabVisual: function refreshTabVisual() {
+  refreshTaskVisual: function refreshTaskVisual() {
       taskDB.fetchTasks(function(tasks) {
 
       var taskList = document.getElementById('tasklist');
@@ -243,7 +282,7 @@ listApp.factory('listApp', function() {
 
         x.addEventListener('click', function(e) {
           var id = parseInt(e.target.getAttribute('data-id'));
-          taskDB.deleteTask(id, refreshTabVisual);
+          taskDB.deleteTask(id, refreshTaskVisual);
         });
       }
     });

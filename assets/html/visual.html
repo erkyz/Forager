@@ -27,21 +27,22 @@
     <!-- Column 1 -->
     <div class="col-md-5 col-xs-5 col-md-offset-2 col-xs-offset-2">
 
-    <h4>Potential (For Later)</h4>
-    <script type="text/ng-template" id="items_renderer.html">
-      <div ui-tree-handle>
-        <a class="btn btn-success btn-xs" data-nodrag ng-click="toggle(this)"><span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a>
-        {{item.title}}
-        <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span class="glyphicon glyphicon-remove"></span></a>
-        <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;"><span class="glyphicon glyphicon-plus"></span></a>
-      </div>
-      <ol ui-tree-nodes="options" ng-model="item.items" ng-class="{hidden: collapsed}">
-        <li ng-repeat="item in item.items" ui-tree-node ng-include="'items_renderer.html'">
-        </li>
-      </ol>
-    </script>
+      <h4>Potential (For Later)</h4>
+      <script type="text/ng-template" id="items_renderer.html">
+        <div ui-tree-handle>
+          <a class="pull-left btn btn-success btn-xs" data-nodrag ng-click="toggle(this)"><span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a>
+          <a class="pull-left btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this)"><span class="glyphicon glyphicon-open"></span></a>
+          {{item.title}}
+          <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span class="glyphicon glyphicon-remove"></span></a>
+          <!--<a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;"><span class="glyphicon glyphicon-plus"></span></a>  -->
+        </div>
+        <ol ui-tree-nodes="options" ng-model="item.items" ng-class="{hidden: collapsed}">
+          <li ng-repeat="item in item.items" ui-tree-node ng-include="'items_renderer.html'">
+          </li>
+        </ol>
+      </script>
       
-      <div ui-tree="tree">
+      <div ui-tree="options" >
       <ol ui-tree-nodes="" ng-model="list">
         <li ng-repeat="item in list" ui-tree-node ng-include="'items_renderer.html'">
           <div ui-tree-handle>
@@ -56,10 +57,15 @@
           </ol>
         </li>
       </ol>
+      </div> 
+
+            <h4>Archive</h4>
+      <p><div class="list-group" id="medium-priority"></div></p>
+      <h4>Irrelevant</h4>
+      <p><div class="list-group" id="low-priority"></div></p> 
     </div>
 
-      
-    </div>
+
     <!-- Column 2 -->
     <div class="col-md-3 col-xs-3">
       <h4 id="tasks">Tasks</h4>
@@ -77,12 +83,7 @@
 
       <br>
 
-      <h4>Potential (For Later)</h4>
-      <p><div class="list-group" id="high-priority"></div></p>
-      <h4>Archive</h4>
-      <p><div class="list-group" id="medium-priority"></div></p>
-      <h4>Irrelevant</h4>
-      <p><div class="list-group" id="low-priority"></div></p>
+
   </div>
 </body>
 

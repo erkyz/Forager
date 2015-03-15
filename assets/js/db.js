@@ -127,6 +127,47 @@ pageDB = (function() {
 	  }
 	};
 
+	/**
+	 * Increment a tab's counter if it's used.
+	 */
+	tDB.swapId = function(id1, id2, callback) {
+		var db = datastore;
+		var transaction = db.transaction(['tab'], 'readwrite');
+		var objStore = transaction.objectStore('tab');
+		var request = objStore.get(id1);
+		var request2 = objStore.get(id2);
+
+		request.onsuccess = function(e) {
+			//get the old value we want to update
+			var tab = request.result;
+			console.log("id1:" + tab.timestamp);
+			tab.timestamp = id2;
+			console.log("id2:" + tab.timestamp);
+
+			//put this updated object back into the DB!
+			var requestUpdate = objStore.put(tab);
+		
+			// Handle a successful datastore put.
+		   requestUpdate.onsuccess = function(e) {
+		    	callback();
+	 		 };
+
+			// Handle errors.
+			requestUpdate.onerror = tDB.onerror;
+		}
+
+		request2.onsuccess = function(e) {
+			//get the old value we want to update
+			var tab = request2.result;
+			tab.timestamp = id1;
+			var requestUpdate = objStore.put(tab);
+		   requestUpdate.onsuccess = function(e) {
+		    	callback();
+	 		 };
+			requestUpdate.onerror = tDB.onerror;
+		}
+	}
+
   // Export the tDB object.
   return tDB;
 }());
