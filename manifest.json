@@ -11,10 +11,6 @@
     "activeTab"
     ],
 
-  "web_accessible_resources": [
-    "icon.png"
-  ],
-
   "browser_action": { 
     "default_icon": "assets/img/icon-16.png",
     "default_popup": "assets/html/popup.html"
@@ -63,7 +59,7 @@
     "_execute_browser_action": {
       "suggested_key": {
         "default": "Ctrl+B",
-        "mac": "Command+B"
+        "mac": "Command+Period"
       }
     }
   }
