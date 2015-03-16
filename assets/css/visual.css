@@ -7,6 +7,8 @@ body {
     background-image: url('/assets/img/background.jpg');
     background-size: 100%;
     text-decoration: none;
+    font-family: 'Open Sans', serif !important;
+    font-size: 13px !important;
 }
 [id^="tabone"] {
     background-color: #7f7fbf;
@@ -38,16 +40,17 @@ hr {
 }
 #currentTask {
     padding-left: 18%;
-    padding-right: 18%;;
+    padding-right: 18%;
 }
 #instructions {
-    padding-top: 50%;
-    padding-left: 18%;
-    padding-right: 18%;
+    padding-bottom: 50px;
     line-height: 125%;
 }
 * {
-  border-radius: 0 !important;
+    border-radius: 0 !important;
+}
+#rm {
+    margin-left: 20px;
 }
 
 /* Angular stuff */

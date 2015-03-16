@@ -45,10 +45,14 @@ listApp.controller('MainCtrl', ['$scope', 'listApp', function ($scope, listApp) 
               if (tab.importance == 1) $scope.tree1.push(obj);
               else if (tab.importance == 2) $scope.tree2.push(obj);
               else $scope.tree3.push(obj);
-              $scope.$apply();  
+              $scope.$digest();  
             }
           }
         });
+        if (Array.isArray($scope.tree3)) $scope.tree1 = [{title:"Nothing here yet.",items:[]}];
+        if (Array.isArray($scope.tree3)) $scope.tree2 = [{title:"Nothing here yet.",items:[]}];
+        if (Array.isArray($scope.tree3)) $scope.tree3 = [{title:"Nothing here yet.",items:[]}];
+        $scope.$apply();
 
       } else if (request.newTask) {   //from popup.js
         task = request.task;
@@ -69,7 +73,7 @@ listApp.controller('MainCtrl', ['$scope', 'listApp', function ($scope, listApp) 
 
             if (tab.task == task) {
               var title = tab.title;
-              if (title.length == 0) title = "Untitled";
+              if (title == undefined || title.length == 0) title = "Untitled";
               else if (title.length > 65) title = title.substring(0,64) + "... ";
               var obj = {};
               obj.title = title;
@@ -79,11 +83,17 @@ listApp.controller('MainCtrl', ['$scope', 'listApp', function ($scope, listApp) 
               obj.url = tab.url;
               if (tab.importance == 1) $scope.tree1.push(obj);
               else if (tab.importance == 2) $scope.tree2.push(obj);
-              else $scope.tree3.push(obj);
-              $scope.$apply();      
+              else $scope.tree3.push(obj);   
+              $scope.$digest();   
             }
           }
+          
         });
+        if ($scope.tree1 === []) $scope.tree1 = [{title:"Nothing here yet.",items:[]}];
+        if ($scope.tree2 === []) $scope.tree2 = [{title:"Nothing here yet.",items:[]}];
+        if ($scope.tree3 === []) $scope.tree3 = [{title:"Nothing here yet.",items:[]}];
+        $scope.$apply();
+        // $scope.tree3 = [{title:"Nothing here yet.",items:[]}];
       }
     });
 
@@ -130,7 +140,7 @@ listApp.controller('MainCtrl', ['$scope', 'listApp', function ($scope, listApp) 
       title: nodeData.title + '.' + (nodeData.items.length + 1),
       items: []
     });
-  };     
+  }; 
 
 }]);
 

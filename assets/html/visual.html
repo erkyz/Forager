@@ -6,15 +6,13 @@
 
 <body ng-app="listApp" ng-controller="MainCtrl" id="test">
   <h2 id="currentTask">Forager</h2>
-    <!-- Column 1 -->
-    <div class="col-md-5 col-xs-5 col-md-offset-2 col-xs-offset-2">
 
     <script type="text/ng-template" id="nodes_renderer.html">
       <div ui-tree-handle>
         <a class="pull-left btn btn-success btn-xs" data-nodrag ng-click="toggle(this)"><span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a>
         <a class="pull-left btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this)"><span class="glyphicon glyphicon-open"></span></a>
         {{item.title}}
-        <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="rm(this)"><span class="glyphicon glyphicon-remove"></span></a>
+        <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="rm(this)" id="rm"><span class="glyphicon glyphicon-remove"></span></a>
       </div>
       <ol ui-tree-nodes="options" ng-model="item.items" ng-class="{hidden: collapsed}">
         <li ng-repeat="item in item.items" ui-tree-node ng-include="'nodes_renderer.html'">
@@ -22,12 +20,15 @@
       </ol>
     </script>
 
+     <!-- Column 1 -->
+    <div class="col-md-4 col-xs-4 col-md-offset-1 col-xs-offset-1">
+
     <h4>Potential (For Later)</h4>
     <div ui-tree="options">
     <ol ui-tree-nodes="" ng-model="tree1" id="tree1-root">
       <li ng-repeat="item in tree1" ui-tree-node ng-include="'nodes_renderer.html'">
-        <div ui-tree-handle>
-          <!-- {{item.title}} -->
+        <div ui-tree-handle id="text">
+          <div id="text">{{item.title}}</div>
         </div>
         <ol ui-tree-nodes="" ng-model="item.items">
           <li ng-repeat="subItem in item.items" ui-tree-node>
@@ -38,13 +39,18 @@
         </ol>
       </li>
     </ol>
+    </div>
+
     </div> 
+
+    <!-- Column 2 -->
+    <div class="col-md-4 col-xs-4">
 
     <h4>Archive</h4>
     <div ui-tree="options">
     <ol ui-tree-nodes="" ng-model="tree2" id="tree2-root">
-      <li ng-repeat="item in tree2" ui-tree-node ng-include="'nodes_renderer.html'">
-        <div ui-tree-handle>
+      <li ng-repeat="item in tree2" ui-tree-node ng-include="'nodes_renderer.html'" >
+        <div ui-tree-handle id="text">
           <!-- {{item.title}} -->
         </div>
         <ol ui-tree-nodes="" ng-model="item.items">
@@ -62,7 +68,7 @@
     <div ui-tree="options">
     <ol ui-tree-nodes="" ng-model="tree3" id="tree3-root">
       <li ng-repeat="item in tree3" ui-tree-node ng-include="'nodes_renderer.html'">
-        <div ui-tree-handle>
+        <div ui-tree-handle id="text">
           <!-- {{item.title}} -->
         </div>
         <ol ui-tree-nodes="" ng-model="item.items">
@@ -77,23 +83,36 @@
     </div>
   </div>
 
-  <!-- Column 2 -->
-  <div class="col-md-3 col-xs-3">
+  </div> 
+
+  <!-- Column 3 -->
+  <div class="col-md-2 col-xs-2">
     <h4 id="tasks">Tasks</h4>
     <p><div class="l1ist-group" id="tasklist"></div></p>
   </div> 
+
   <!-- Hardcode gutter -->
-  <div class="col-md-2 col-xs-2"><br></div>
+  <div class="col-md-1 col-xs-1"><br></div> 
 
   <!-- Second row -->
-  <div class="col-md-8 col-xs-8 col-md-offset-2 col-xs-offset-2"><br>
+  <div class="col-md-10 col-xs-10 col-md-offset-1 col-xs-offset-1" id="instructions"><br>
     <hr>
-    &#8984I to save as potential. &#8984K to archive. &#8984J to close. &#8984Period to start a new task.<br>
+    &#8984I to save as potential. &#8984K to archive. &#8984J to close. &#8984Period to start a new task. Press the right arrow key to switch visualizations.<br>
     <a id="export"></a><br>
     <a id="help" href="https://www.evernote.com/l/ASrbR-kwtCxPU4w9T0q8oftsFPqoyZ4Jlyc">Need help? Click here!</a>
 
     <br>
 
+  <style>
+  #currentTask {
+      padding-left: 9.5% !important;
+      padding-right: 9.5% !important;
+  }
+  </style>
+
+  <!-- Google Fonts -->
+  <link href='http://fonts.googleapis.com/css?family=Droid+Serif' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
   <!-- JQuery -->
   <script src="/assets/js/jquery-2.1.3.min.js"></script>
   <!-- Bootstrap -->
