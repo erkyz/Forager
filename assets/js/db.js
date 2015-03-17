@@ -128,7 +128,7 @@ pageDB = (function() {
 	};
 
 	/**
-	 * Increment a tab's counter if it's used.
+	 * Swap tab ids to change order of db
 	 */
 	tDB.swapId = function(id1, id2, callback) {
 		var db = datastore;
@@ -164,6 +164,60 @@ pageDB = (function() {
 		   requestUpdate.onsuccess = function(e) {
 		    	callback();
 	 		 };
+			requestUpdate.onerror = tDB.onerror;
+		}
+	}
+
+	/**
+	 * Change a tab's task.
+	 */
+	tDB.changeTask = function(id, newTask, callback) {
+		var db = datastore;
+		var transaction = db.transaction(['tab'], 'readwrite');
+		var objStore = transaction.objectStore('tab');
+		var request = objStore.get(id);
+
+		request.onsuccess = function(e) {
+			//get the old value we want to update
+			var tab = request.result;
+			tab.task = newTask;
+
+			//put this updated object back into the DB!
+			var requestUpdate = objStore.put(tab);
+		
+			// Handle a successful datastore put.
+		   requestUpdate.onsuccess = function(e) {
+		    	callback();
+	 		 };
+
+			// Handle errors.
+			requestUpdate.onerror = tDB.onerror;
+		}
+	}
+
+	/**
+	 * Change a tab's importance.
+	 */
+	tDB.changeImportance = function(id, importance, callback) {
+		var db = datastore;
+		var transaction = db.transaction(['tab'], 'readwrite');
+		var objStore = transaction.objectStore('tab');
+		var request = objStore.get(id);
+
+		request.onsuccess = function(e) {
+			//get the old value we want to update
+			var tab = request.result;
+			tab.importance = importance;
+
+			//put this updated object back into the DB!
+			var requestUpdate = objStore.put(tab);
+		
+			// Handle a successful datastore put.
+		   requestUpdate.onsuccess = function(e) {
+		    	callback();
+	 		 };
+
+			// Handle errors.
 			requestUpdate.onerror = tDB.onerror;
 		}
 	}

@@ -1,0 +1,94 @@
+<!doctype html>
+<html ng-app>
+<head>
+    <script type="text/javascript" src="/assets/js/jquery.js"></script>
+ 
+    <!-- Google Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Droid+Serif' rel='stylesheet' type='text/css'>
+    <!-- Bootstrap! -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+    <!-- Angular -->
+    <script src="/assets/js/angular.min.js"></script>
+    <script src="/assets/js/angular-drag-and-drop-lists.js"></script>
+    <!-- Angular UI Tree -->
+    <link rel="stylesheet" href="/assets/angular-ui-tree-master/dist/angular-ui-tree.min.css">
+    <script type="text/javascript" src="/assets/angular-ui-tree-master/dist/angular-ui-tree.js"></script>
+
+    <script type="text/javascript" src="/assets/js/visual3.js"></script>
+    <script type="text/javascript" src="/assets/js/db.js"></script>
+    <script src="/assets/js/taskdb.js"></script>
+    <script src="/assets/js/shortcut.js"></script>
+    
+
+    <title>Forager</title>
+
+    <style>
+      body {
+        line-height: 100%;
+        font-size = 10%;
+        padding-top: 1.5%;
+        padding-bottom: 5%;
+        background-color: #FFFFFF;
+        min-width: 250px;
+        max-width: 100%;
+        padding-left: 20%;
+        padding-right: 20%;
+        background-image: url('/assets/img/background.jpg');
+        background-size: 100%;
+        text-decoration: none;
+      }
+      [id^="tabone"] {
+        background-color: #7f7fbf;
+      }
+      [id^="tabone"]:hover {
+        background-color: white;
+      }
+      [id^="tabtwo"] {
+        background-color: #9999cc;
+      }
+      [id^="tabone"]:hover {
+        background-color: white;
+      }
+      [id^="tabthree"] {
+        background-color: #b2b2d8;
+      }
+      [id^="tabone"]:hover {
+        background-color: white;
+      }
+      a {
+        color: black;
+      }
+      .close {
+        color: black;
+        font-size: 18px; 
+      }
+      hr {
+        color: black;
+      }
+    </style> 
+
+</head>
+
+<body>
+    <h2 id="currentTask">Forager</h2>
+    <br/>
+    <h4>Here will be the new visualization!</h4>
+    <p><div class="list-group" id="high-priority"></div></p>
+    <h4>Archive</h4>
+    <p><div class="list-group" id="medium-priority"></div></p>
+    <h4>Irrelevant</h4>
+    <p><div class="list-group" id="low-priority"></div></p>
+    <hr>
+
+    &#8984I to save as potential. &#8984K to archive. &#8984J to close. &#8984B to start a new task.
+    <a href="https://www.evernote.com/l/ASrbR-kwtCxPU4w9T0q8oftsFPqoyZ4Jlyc"> Need help?</a>
+
+  
+</body>
+</html>

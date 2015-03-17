@@ -1,7 +1,7 @@
 body {
-    padding-top: 1.5%;
-    padding-bottom: 5%;
-    background-attachment: fixed;  
+    padding-bottom: 1.5%;
+    padding-bottom: 7.5%;
+    background-attachment: fixed;
     min-width: 250px;
     max-width: 100%;
     background-image: url('/assets/img/background.jpg');
@@ -52,6 +52,22 @@ hr {
 #rm {
     margin-left: 20px;
 }
+#col1 {
+    overflow: scroll;
+    height: 425px !important;
+}
+#col2 {
+    overflow: scroll;
+    height: 235px !important;
+}
+#col3 {
+    overflow: scroll;
+    height: 150px !important;
+}
+#tasklist {
+    overflow: scroll;
+    height: 425px !important;
+}
 
 /* Angular stuff */
 .btn {
@@ -59,9 +75,9 @@ hr {
 }
 
 .angular-ui-tree-handle {
-    background: #f8faff;
+    background: white;
     border: 1px solid #dae2ea;
-    color: #7c9eb2;
+    color: rgb(85, 121, 133);
     padding: 10px 10px;
 }
 

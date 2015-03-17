@@ -24,9 +24,9 @@ listApp.controller('MainCtrl', ['$scope', 'listApp', function ($scope, listApp) 
       if (request.newTab == true) {   //from content.js
         listApp.refreshVisual();
 
-        $scope.tree1 = [];
-        $scope.tree2 = [];
-        $scope.tree3 = [];
+        $scope.tree1 = [{importance:1}];
+        $scope.tree2 = [{importance:2}];
+        $scope.tree3 = [{importance:3}];
         pageDB.fetchTabs(function(tabs) {
           for(var i = 0; i < tabs.length; i++) {
             // Read the tab items backwards (most recent first).
@@ -49,11 +49,6 @@ listApp.controller('MainCtrl', ['$scope', 'listApp', function ($scope, listApp) 
             }
           }
         });
-        if (Array.isArray($scope.tree3)) $scope.tree1 = [{title:"Nothing here yet.",items:[]}];
-        if (Array.isArray($scope.tree3)) $scope.tree2 = [{title:"Nothing here yet.",items:[]}];
-        if (Array.isArray($scope.tree3)) $scope.tree3 = [{title:"Nothing here yet.",items:[]}];
-        $scope.$apply();
-
       } else if (request.newTask) {   //from popup.js
         task = request.task;
         listApp.refreshVisual();
@@ -63,9 +58,12 @@ listApp.controller('MainCtrl', ['$scope', 'listApp', function ($scope, listApp) 
         listApp.refreshVisual();
         listApp.refreshTaskVisual();
 
-        $scope.tree1 = [];
-        $scope.tree2 = [];
-        $scope.tree3 = [];
+        nothing1 = [{title:"Nothing here yet.",importance:1,items:[]}];
+        nothing2 = [{title:"Nothing here yet.",importance:2,items:[]}];
+        nothing3 = [{title:"Nothing here yet.",importance:3,items:[]}];
+        $scope.tree1 = nothing1;
+        $scope.tree2 = nothing2;
+        $scope.tree3 = nothing3;
         pageDB.fetchTabs(function(tabs) {
           for(var i = 0; i < tabs.length; i++) {
             // Read the tab items backwards (most recent first).
@@ -81,19 +79,26 @@ listApp.controller('MainCtrl', ['$scope', 'listApp', function ($scope, listApp) 
               obj.id = tab.timestamp;
               obj.items = [];
               obj.url = tab.url;
-              if (tab.importance == 1) $scope.tree1.push(obj);
-              else if (tab.importance == 2) $scope.tree2.push(obj);
-              else $scope.tree3.push(obj);   
+              if (tab.importance == 1) {
+                if ($scope.tree1 === nothing1) $scope.tree1 = [];
+                obj.importance = 1;
+                $scope.tree1.push(obj);
+              }
+              else if (tab.importance == 2) {
+                if ($scope.tree2 === nothing2) $scope.tree2 = [];
+                obj.importance = 2;
+                $scope.tree2.push(obj);
+              }
+              else {
+                if ($scope.tree3 === nothing3) $scope.tree3 = [];
+                obj.importance = 3;
+                $scope.tree3.push(obj);  
+              } 
               $scope.$digest();   
             }
           }
           
         });
-        if ($scope.tree1 === []) $scope.tree1 = [{title:"Nothing here yet.",items:[]}];
-        if ($scope.tree2 === []) $scope.tree2 = [{title:"Nothing here yet.",items:[]}];
-        if ($scope.tree3 === []) $scope.tree3 = [{title:"Nothing here yet.",items:[]}];
-        $scope.$apply();
-        // $scope.tree3 = [{title:"Nothing here yet.",items:[]}];
       }
     });
 
@@ -107,6 +112,15 @@ listApp.controller('MainCtrl', ['$scope', 'listApp', function ($scope, listApp) 
       var start = event.source.index;
       var end = event.dest.index;
       var dest = event.dest.nodesScope.$modelValue;
+      var sourceList = event.source.nodesScope.$modelValue;
+      if (dest.length != sourceList.length && (dest[start] != sourceList[start])) {
+          console.log(dest[end].title);
+          console.log(event.source.nodeScope.$modelValue.title);
+          if (event.dest.index == 0) importance = dest[1].importance;
+          else importance = dest[0].importance;
+          pageDB.changeImportance(event.source.nodeScope.$modelValue.id, importance, 
+            function() {});
+      }     
       // Update pageDB order
       if (Math.abs(start-end) == 1) {
         pageDB.swapId(dest[end].id,dest[start].id, function() {});
