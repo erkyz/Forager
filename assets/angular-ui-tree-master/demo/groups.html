@@ -21,12 +21,12 @@
         <h3>Groups &amp; Categories</h3>
         <ol ui-tree-nodes ng-model="groups" data-type="group">
           <li ng-repeat="group in groups" ui-tree-node>
-            <div class="group-title angular-ui-tree-handle" ng-show="!group.editing">
+            <div class="group-title angular-ui-tree-handle" ng-hide="group.editing">
               <a href="" class="btn btn-danger btn-xs pull-right" data-nodrag ng-click="removeGroup(group)"><i class="glyphicon glyphicon-remove"></i></a>
-              <a href="" class="btn btn-primary btn-xs pull-right" data-nodrag ng-click="editGroup(group)"><i class="glyphicon glyphicon-pencil"></i></a>
+              <a href="" class="btn btn-primary btn-xs pull-right" data-nodrag ng-click="editGroup(this)"><i class="glyphicon glyphicon-pencil"></i></a>
               <div>&nbsp;{{group.name}}</div>
             </div>
-            <div class="group-title angular-ui-tree-handle" data-nodrag ng-show="group.editing">
+            <div class="angular-ui-tree-handle" data-nodrag ng-show="group.editing">
               <form class="form-inline" role="form">
                 <div class="form-group">
                   <label class="sr-only" for="groupName">Group name</label>

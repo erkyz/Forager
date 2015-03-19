@@ -12,7 +12,7 @@ chrome.runtime.onMessage.addListener(
 	 	 	pageDB.open();
 	 	 	//create item in database
          pageDB.createTab(task, title, 1, highlighted, url, function() {});
-         // //inform visual that there's a new tab
+         // inform visual that there's a new tab
          chrome.runtime.sendMessage({newTab: true}, function(response) {
 			  console.log(response.farewell);
 			});
@@ -47,12 +47,9 @@ chrome.commands.onCommand.addListener(function(command) {
   // Call 'update' with an empty properties object to get access to the current
   // tab (given to us in the callback function).
   chrome.tabs.update({}, function(tab) {
-   if (command == 'add-importance-1')
-      add1();
-   else if (command == 'add-importance-2')
-      add2();
-   else if (command == 'add-importance-3')
-      add3();
+   if (command == 'add-importance-1') add1();
+   else if (command == 'add-importance-2') add2();
+   else if (command == 'add-importance-3') add3();
   });
 });
 
@@ -88,3 +85,4 @@ function add3() {
 				});
 		}); 
 }
+

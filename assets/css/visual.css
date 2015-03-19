@@ -1,5 +1,5 @@
 body {
-    padding-bottom: 1.5%;
+    padding-top: 1%;
     padding-bottom: 7.5%;
     background-attachment: fixed;
     min-width: 250px;
@@ -37,6 +37,8 @@ a {
 }
 hr {
     color: black;
+    margin: 0px;
+    padding: 1%;
 }
 #currentTask {
     padding-left: 18%;
@@ -55,18 +57,32 @@ hr {
 #col1 {
     overflow: scroll;
     height: 425px !important;
+    background-color: rgba(240,248,255,0.55);
+    border: 1.5px solid lightgray;
 }
 #col2 {
     overflow: scroll;
     height: 235px !important;
+    background-color: rgba(240,248,255,0.55);
+    border: 1.5px solid lightgray;
 }
 #col3 {
     overflow: scroll;
     height: 150px !important;
+    background-color: rgba(240,248,255,0.55);
+    border: 1.5px solid lightgray;
 }
 #tasklist {
     overflow: scroll;
     height: 425px !important;
+    background-color: rgba(240,248,255,0.55);
+    border: 1.5px solid lightgray; /* #fae2fa */
+}
+#textform {
+    width: 75%;
+}
+#txt {
+    width: 100%;
 }
 
 /* Angular stuff */
@@ -97,4 +113,13 @@ hr {
 .group-title {
     background-color: #687074 !important;
     color: #FFF !important;
+}
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak],
+.ng-cloak, .x-ng-cloak,
+.ng-hide {
+  display: none !important;
+}
+
+ng\:form {
+  display: block;
 }

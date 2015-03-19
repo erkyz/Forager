@@ -24,40 +24,6 @@ listApp.controller('MainCtrl', ['$scope', 'listApp', function ($scope, listApp) 
       if (request.newTab == true) {   //from content.js
         listApp.refreshVisual();
 
-        $scope.tree1 = [{importance:1}];
-        $scope.tree2 = [{importance:2}];
-        $scope.tree3 = [{importance:3}];
-        pageDB.fetchTabs(function(tabs) {
-          for(var i = 0; i < tabs.length; i++) {
-            // Read the tab items backwards (most recent first).
-            var tab = tabs[tabs.length - i - 1];
-
-            if (tab.task == task) {
-              var title = tab.title;
-              if (title.length == 0) title = "Untitled";
-              else if (title.length > 65) title = title.substring(0,64) + "... ";
-              var obj = {};
-              obj.title = title;
-              obj.task = task;
-              obj.id = tab.timestamp;
-              obj.items = [];
-              obj.url = tab.url;
-              if (tab.importance == 1) $scope.tree1.push(obj);
-              else if (tab.importance == 2) $scope.tree2.push(obj);
-              else $scope.tree3.push(obj);
-              $scope.$digest();  
-            }
-          }
-        });
-      } else if (request.newTask) {   //from popup.js
-        task = request.task;
-        listApp.refreshVisual();
-        listApp.refreshTaskVisual();
-      } else if (request.currentTask) { //newVisual from me
-        task = request.task;
-        listApp.refreshVisual();
-        listApp.refreshTaskVisual();
-
         nothing1 = [{title:"Nothing here yet.",importance:1,items:[]}];
         nothing2 = [{title:"Nothing here yet.",importance:2,items:[]}];
         nothing3 = [{title:"Nothing here yet.",importance:3,items:[]}];
@@ -94,16 +60,64 @@ listApp.controller('MainCtrl', ['$scope', 'listApp', function ($scope, listApp) 
                 obj.importance = 3;
                 $scope.tree3.push(obj);  
               } 
-              $scope.$digest();   
+              $scope.$digest();
+            }
+          }
+          
+        });
+      } else if (request.newTask) {   //from popup.js
+        task = request.task;
+        listApp.refreshVisual();
+        listApp.refreshTaskVisual();
+      } else if (request.currentTask) { //newVisual from me
+        task = request.task;
+        listApp.refreshVisual();
+        listApp.refreshTaskVisual();
+
+        nothing1 = [{title:"Nothing here yet.",importance:1,items:[]}];
+        nothing2 = [{title:"Nothing here yet.",importance:2,items:[]}];
+        nothing3 = [{title:"Nothing here yet.",importance:3,items:[]}];
+        $scope.tree1 = nothing1;
+        console.log($scope.tree1);
+        $scope.tree2 = nothing2;
+        $scope.tree3 = nothing3;
+        pageDB.fetchTabs(function(tabs) {
+          for(var i = 0; i < tabs.length; i++) {
+            // Read the tab items backwards (most recent first).
+            var tab = tabs[tabs.length - i - 1];
+
+            if (tab.task == task) {
+              var title = tab.title;
+              if (title == undefined || title.length == 0) title = "Untitled";
+              else if (title.length > 65) title = title.substring(0,64) + "... ";
+              var obj = {};
+              obj.title = title;
+              obj.task = task;
+              obj.id = tab.timestamp;
+              obj.items = [];
+              obj.url = tab.url;
+              if (tab.importance == 1) {
+                if ($scope.tree1 === nothing1) $scope.tree1 = [];
+                obj.importance = 1;
+                $scope.tree1.push(obj);
+              }
+              else if (tab.importance == 2) {
+                if ($scope.tree2 === nothing2) $scope.tree2 = [];
+                obj.importance = 2;
+                $scope.tree2.push(obj);
+              }
+              else {
+                if ($scope.tree3 === nothing3) $scope.tree3 = [];
+                obj.importance = 3;
+                $scope.tree3.push(obj);  
+              } 
+              $scope.$digest();
             }
           }
           
         });
       }
     });
-
-
-  //some of the task stuff is messed up now.
     
   $scope.selectedItem = {};
 
@@ -142,11 +156,27 @@ listApp.controller('MainCtrl', ['$scope', 'listApp', function ($scope, listApp) 
     scope.remove();
   };
 
+  $scope.save = function(scope) {
+    pageDB.changeTitle(scope.$modelValue.id, scope.$modelValue.name, 
+      function() {});
+    scope.editing = false;
+    newView();
+  };
+
+  $scope.cancelEditing = function(scope) {
+    scope.editing = false;
+  }
+
+  $scope.edit = function(scope) {
+    scope.editing = true;
+  };
+
   $scope.toggle = function(scope) {
     scope.toggle();
   };
 
-  $scope.newSubItem = function(scope) {
+  $scope.open = function(scope) {
+    console.log(scope.$modelValue.url);
     window.open(scope.$modelValue.url, "_self");
 
     nodeData.items.push({

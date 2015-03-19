@@ -4,22 +4,12 @@
   <title>Forager</title>
 </head>
 
-<body ng-app="listApp" ng-controller="MainCtrl" id="test">
+<body ng-app="listApp" ng-controller="MainCtrl">
   <h2 id="currentTask">Forager</h2>
 
-    <script type="text/ng-template" id="nodes_renderer.html">
-      <div ui-tree-handle>
-        <!-- <a class="pull-left btn btn-success btn-xs" data-nodrag ng-click="toggle(this)"><span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a> -->
-        <a class="btn btn-default btn-xs" data-nodrag ng-click="newSubItem(this)"><span class="glyphicon glyphicon-open"></span></a>
-        {{item.title}}
-        <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="rm(this)" id="rm"><span class="glyphicon glyphicon-remove"></span></a>
-      </div>
-      <ol ui-tree-nodes="options" ng-model="item.items" ng-class="{hidden: collapsed}">
-        <li ng-repeat="item in item.items" ui-tree-node ng-include="'nodes_renderer.html'">
-        </li>
-      </ol>
-    </script>
+    <!-- Maybe use ng-template, but how do you override it with directives? -->
 
+    <!-- First Row -->
     <div class="row row-bottom-margin">
 
      <!-- Column 1 -->
@@ -27,20 +17,35 @@
 
     <h4>Potential (For Later)</h4>
     <div ui-tree="options" id="col1">
-    <ol ui-tree-nodes="" ng-model="tree1" id="tree1-root">
-      <li ng-repeat="item in tree1" ui-tree-node ng-include="'nodes_renderer.html'">
-        <div ui-tree-handle id="text">
-          <div id="text">{{item.title}}</div>
-        </div>
-        <ol ui-tree-nodes="" ng-model="item.items">
-          <li ng-repeat="subItem in item.items" ui-tree-node>
-            <div ui-tree-handle>
-              <!-- {{subItem.title}} -->
+    <ol ui-tree-nodes="" ng-model="tree1" data-type="item" id="tree1-root">
+      <li ng-repeat="item in tree1" ui-tree-node>
+
+       <div class="angular-ui-tree-handle" ng-hide="editing">
+          <!-- <a class="pull-left btn btn-success btn-xs" data-nodrag ng-click="toggle(this)"><span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a> -->
+          <a class="btn btn-default btn-xs" data-nodrag ng-click="open(this)"><span class="glyphicon glyphicon-open"></span></a>
+          <a href="" class="btn btn-primary btn-xs" data-nodrag ng-click="edit(this)"><i class="glyphicon glyphicon-pencil"></i></a>
+          {{item.title}}
+          <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="rm(this)" id="rm"><span class="glyphicon glyphicon-remove"></span></a>
+      </div>
+
+      <div class="angular-ui-tree-handle" data-nodrag ng-show="editing">
+          <form class="form-inline" role="form">
+            <div class="form-group" id="textform">
+              <input type="text" id="txt" class="form-control" placeholder="{{item.title}}" ng-model="item.name">
             </div>
-          </li>
-        </ol>
-      </li>
-    </ol>
+            <a class="pull-right btn btn-default btn-xs" data-nodrag ng-click="cancelEditing(this)"><span class="glyphicon glyphicon-remove"></span></a>
+             <a class="pull-right btn btn-default btn-xs" data-nodrag ng-click="save(this)"><span class="glyphicon glyphicon-ok"></span></a>
+          </form>
+        </div>
+
+      <ol ui-tree-nodes="options" ng-model="item.items" ng-class="{hidden: collapsed}">
+        <li ng-repeat="subItem in item.items" ui-tree-node>
+          <div ui-tree-handle>
+              {{subItem.title}}
+            </div>
+        </li>
+      </ol>
+
     </div>
 
     </div>
@@ -50,38 +55,68 @@
 
     <h4>Archive</h4>
     <div ui-tree="options" id="col2">
-    <ol ui-tree-nodes="" ng-model="tree2" id="tree2-root">
-      <li ng-repeat="item in tree2" ui-tree-node ng-include="'nodes_renderer.html'" >
-        <div ui-tree-handle id="text">
-          <!-- {{item.title}} -->
-        </div>
-        <ol ui-tree-nodes="" ng-model="item.items">
-          <li ng-repeat="subItem in item.items" ui-tree-node>
-            <div ui-tree-handle>
-              <!-- {{subItem.title}} -->
+    <ol ui-tree-nodes="" ng-model="tree2" data-type="item" id="tree2-root">
+      <li ng-repeat="item in tree2" ui-tree-node>
+
+      <div class="angular-ui-tree-handle" ng-hide="hi">
+          <!-- <a class="pull-left btn btn-success btn-xs" data-nodrag ng-click="toggle(this)"><span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a> -->
+          <a class="btn btn-default btn-xs" data-nodrag ng-click="open(this)"><span class="glyphicon glyphicon-open"></span></a>
+          <a href="" class="btn btn-primary btn-xs" data-nodrag ng-click="edit(this)"><i class="glyphicon glyphicon-pencil"></i></a>
+          {{item.title}}
+          <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="rm(this)" id="rm"><span class="glyphicon glyphicon-remove"></span></a>
+      </div>
+
+      <div class="angular-ui-tree-handle" data-nodrag ng-show="hi">
+          <form class="form-inline" role="form">
+            <div class="form-group">
+              <label class="sr-only" for="groupName">{{item.title}}</label>
+              <input type="text" class="form-control" placeholder="{{item.title}}" ng-model="item.name">
             </div>
-          </li>
-        </ol>
-      </li>
-    </ol>
+            <button type="submit" class="btn btn-default" ng-click="saveGroup(group)">Save</button>
+            <button type="submit" class="btn btn-default" ng-click="cancelEditingGroup(group)">Cancel</button>
+          </form>
+        </div>
+
+      <ol ui-tree-nodes="options" ng-model="item.items" ng-class="{hidden: collapsed}">
+        <li ng-repeat="subItem in item.items" ui-tree-node>
+          <div ui-tree-handle>
+              {{subItem.title}}
+            </div>
+        </li>
+      </ol>
     </div>
 
     <h4>Irrelevant</h4>
     <div ui-tree="options" id="col3">
-    <ol ui-tree-nodes="" ng-model="tree3" id="tree3-root">
-      <li ng-repeat="item in tree3" ui-tree-node ng-include="'nodes_renderer.html'">
-        <div ui-tree-handle id="text">
-          <!-- {{item.title}} -->
-        </div>
-        <ol ui-tree-nodes="" ng-model="item.items">
-          <li ng-repeat="subItem in item.items" ui-tree-node>
-            <div ui-tree-handle>
-              <!-- {{subItem.title}} -->
+    <ol ui-tree-nodes="" ng-model="tree2" data-type="item" id="tree3-root">
+      <li ng-repeat="item in tree3" ui-tree-node>
+
+      <div class="angular-ui-tree-handle" ng-hide="hi">
+          <!-- <a class="pull-left btn btn-success btn-xs" data-nodrag ng-click="toggle(this)"><span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a> -->
+          <a class="btn btn-default btn-xs" data-nodrag ng-click="open(this)"><span class="glyphicon glyphicon-open"></span></a>
+          <a href="" class="btn btn-primary btn-xs" data-nodrag ng-click="edit(this)"><i class="glyphicon glyphicon-pencil"></i></a>
+          {{item.title}}
+          <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="rm(this)" id="rm"><span class="glyphicon glyphicon-remove"></span></a>
+      </div>
+
+      <div class="angular-ui-tree-handle" data-nodrag ng-show="hi">
+          <form class="form-inline" role="form">
+            <div class="form-group">
+              <label class="sr-only" for="groupName">{{item.title}}</label>
+              <input type="text" class="form-control" placeholder="{{item.title}}" ng-model="item.name">
             </div>
-          </li>
-        </ol>
-      </li>
-    </ol>
+            <button type="submit" class="btn btn-default" ng-click="saveGroup(group)">Save</button>
+            <button type="submit" class="btn btn-default" ng-click="cancelEditingGroup(group)">Cancel</button>
+          </form>
+        </div>
+
+      <ol ui-tree-nodes="options" ng-model="item.items" ng-class="{hidden: collapsed}">
+        <li ng-repeat="subItem in item.items" ui-tree-node>
+          <div ui-tree-handle>
+              {{subItem.title}}
+            </div>
+        </li>
+      </ol>
     </div>
 
   </div>
@@ -112,8 +147,8 @@
 
   <style>
   #currentTask {
-    padding-left: 9% !important;
-    padding-right: 9% !important;
+    padding-left: 8.4% !important;
+    padding-right: 8.4% !important;
   }
   body {
     overflow: hidden; 

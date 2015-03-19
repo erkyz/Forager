@@ -62,8 +62,8 @@
       }
     };
 
-    $scope.editGroup = function(group) {
-      group.editing = true;
+    $scope.editGroup = function(scope) {
+      scope.group.editing = true;
     };
 
     $scope.cancelEditingGroup = function(group) {

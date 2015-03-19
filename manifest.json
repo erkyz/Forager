@@ -28,8 +28,19 @@
     "persistent": true
   },
 
+  "content_scripts": [
+    {
+      "matches": ["http://*/*","https://*/*"],
+      "js": ["assets/js/script.js"],
+      "run_at": "document_end"
+    }
+  ],
+
+  "web_accessible_resources": ["assets/html/popup.html","assets/js/sidebar.js",
+    "assets/js/script.js"],
+
   "icons": {
-    "16": "assets/img/green-icon.png", 
+    "16": "assets/img/green-icon.png",
     "48": "assets/img/green-icon.png",
     "128": "assets/img/green-icon.png"
   },

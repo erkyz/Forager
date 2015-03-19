@@ -222,6 +222,33 @@ pageDB = (function() {
 		}
 	}
 
+	/**
+	 * Change a tab's title.
+	 */
+	tDB.changeTitle = function(id, title, callback) {
+		var db = datastore;
+		var transaction = db.transaction(['tab'], 'readwrite');
+		var objStore = transaction.objectStore('tab');
+		var request = objStore.get(id);
+
+		request.onsuccess = function(e) {
+			//get the old value we want to update
+			var tab = request.result;
+			tab.title = title;
+
+			//put this updated object back into the DB!
+			var requestUpdate = objStore.put(tab);
+		
+			// Handle a successful datastore put.
+		   requestUpdate.onsuccess = function(e) {
+		    	callback();
+	 		 };
+
+			// Handle errors.
+			requestUpdate.onerror = tDB.onerror;
+		}
+	}
+
   // Export the tDB object.
   return tDB;
 }());
