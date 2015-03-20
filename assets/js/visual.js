@@ -8,7 +8,9 @@ function newView() {
 }
 newView();
 
-listApp.controller('MainCtrl', ['$scope', 'listApp', function ($scope, listApp) {
+listApp.controller('MainCtrl', ['$scope', 'listApp', function ($scope, listApp, $filter) {
+  $scope.editing = false;
+
   pageDB.open(listApp.refreshVisual);
 
   pageDB.open(listApp.refreshVisual);
@@ -184,7 +186,19 @@ listApp.controller('MainCtrl', ['$scope', 'listApp', function ($scope, listApp) 
       title: nodeData.title + '.' + (nodeData.items.length + 1),
       items: []
     });
-  }; 
+  };
+
+  $scope.visible = function(item, scope) {
+    if ($scope.query && $scope.query.length > 0
+      && (item.title.toUpperCase()).indexOf($scope.query.toUpperCase()) == -1) {
+      return false;
+    }
+    return true;
+  };
+
+  $scope.findNodes = function(){
+
+  };
 
 }]);
 

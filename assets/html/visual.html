@@ -6,6 +6,9 @@
 
 <body ng-app="listApp" ng-controller="MainCtrl">
   <h2 id="currentTask">Forager</h2>
+  <div id="searchbar">
+  <h3>Search: <input ng-model="query" ng-change="findNodes()"/></h3>
+  </div>
 
     <!-- Maybe use ng-template, but how do you override it with directives? -->
 
@@ -18,9 +21,9 @@
     <h4>Potential (For Later)</h4>
     <div ui-tree="options" id="col1">
     <ol ui-tree-nodes="" ng-model="tree1" data-type="item" id="tree1-root">
-      <li ng-repeat="item in tree1" ui-tree-node>
+      <li ng-repeat="item in tree1" ng-show="visible(item,this)" ui-tree-node>
 
-       <div class="angular-ui-tree-handle" ng-hide="editing">
+       <div class="angular-ui-tree-handle" ng-show="visible(item,this)" ng-hide="editing">
           <!-- <a class="pull-left btn btn-success btn-xs" data-nodrag ng-click="toggle(this)"><span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a> -->
           <a class="btn btn-default btn-xs" data-nodrag ng-click="open(this)"><span class="glyphicon glyphicon-open"></span></a>
           <a href="" class="btn btn-primary btn-xs" data-nodrag ng-click="edit(this)"><i class="glyphicon glyphicon-pencil"></i></a>
@@ -28,7 +31,7 @@
           <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="rm(this)" id="rm"><span class="glyphicon glyphicon-remove"></span></a>
       </div>
 
-      <div class="angular-ui-tree-handle" data-nodrag ng-show="editing">
+      <div class="angular-ui-tree-handle" data-nodrag ng-show="visible(item,this) && editing">
           <form class="form-inline" role="form">
             <div class="form-group" id="textform">
               <input type="text" id="txt" class="form-control" placeholder="{{item.title}}" ng-model="item.name">
@@ -39,8 +42,8 @@
         </div>
 
       <ol ui-tree-nodes="options" ng-model="item.items" ng-class="{hidden: collapsed}">
-        <li ng-repeat="subItem in item.items" ui-tree-node>
-          <div ui-tree-handle>
+        <li ng-repeat="subItem in item.items" ng-show="visible(item,this)" ui-tree-node>
+          <div ui-tree-handle ng-show="visible(item,this)">
               {{subItem.title}}
             </div>
         </li>
@@ -56,9 +59,9 @@
     <h4>Archive</h4>
     <div ui-tree="options" id="col2">
     <ol ui-tree-nodes="" ng-model="tree2" data-type="item" id="tree2-root">
-      <li ng-repeat="item in tree2" ui-tree-node>
+      <li ng-repeat="item in tree2" ng-show="visible(item,this)" ui-tree-node>
 
-      <div class="angular-ui-tree-handle" ng-hide="hi">
+      <div class="angular-ui-tree-handle" ng-show="visible(item,this)" ng-hide="editing">
           <!-- <a class="pull-left btn btn-success btn-xs" data-nodrag ng-click="toggle(this)"><span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a> -->
           <a class="btn btn-default btn-xs" data-nodrag ng-click="open(this)"><span class="glyphicon glyphicon-open"></span></a>
           <a href="" class="btn btn-primary btn-xs" data-nodrag ng-click="edit(this)"><i class="glyphicon glyphicon-pencil"></i></a>
@@ -66,7 +69,7 @@
           <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="rm(this)" id="rm"><span class="glyphicon glyphicon-remove"></span></a>
       </div>
 
-      <div class="angular-ui-tree-handle" data-nodrag ng-show="hi">
+      <div class="angular-ui-tree-handle" data-nodrag ng-show="visible(item,this) && editing">
           <form class="form-inline" role="form">
             <div class="form-group">
               <label class="sr-only" for="groupName">{{item.title}}</label>
@@ -78,7 +81,7 @@
         </div>
 
       <ol ui-tree-nodes="options" ng-model="item.items" ng-class="{hidden: collapsed}">
-        <li ng-repeat="subItem in item.items" ui-tree-node>
+        <li ng-repeat="subItem in item.items" ng-show="visible(item,this)" ui-tree-node>
           <div ui-tree-handle>
               {{subItem.title}}
             </div>
@@ -89,9 +92,9 @@
     <h4>Irrelevant</h4>
     <div ui-tree="options" id="col3">
     <ol ui-tree-nodes="" ng-model="tree2" data-type="item" id="tree3-root">
-      <li ng-repeat="item in tree3" ui-tree-node>
+      <li ng-repeat="item in tree3" ng-show="visible(item,this)" ui-tree-node>
 
-      <div class="angular-ui-tree-handle" ng-hide="hi">
+      <div class="angular-ui-tree-handle" ng-show="visible(item,this)" ng-hide="editing">
           <!-- <a class="pull-left btn btn-success btn-xs" data-nodrag ng-click="toggle(this)"><span class="glyphicon" ng-class="{'glyphicon-chevron-right': collapsed, 'glyphicon-chevron-down': !collapsed}"></span></a> -->
           <a class="btn btn-default btn-xs" data-nodrag ng-click="open(this)"><span class="glyphicon glyphicon-open"></span></a>
           <a href="" class="btn btn-primary btn-xs" data-nodrag ng-click="edit(this)"><i class="glyphicon glyphicon-pencil"></i></a>
@@ -99,7 +102,7 @@
           <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="rm(this)" id="rm"><span class="glyphicon glyphicon-remove"></span></a>
       </div>
 
-      <div class="angular-ui-tree-handle" data-nodrag ng-show="hi">
+      <div class="angular-ui-tree-handle" data-nodrag ng-show="editing && visible(item,this)">
           <form class="form-inline" role="form">
             <div class="form-group">
               <label class="sr-only" for="groupName">{{item.title}}</label>
